@@ -1,4 +1,6 @@
 # nvim_windows
+Neovim config to work with C# on Windows
+
 1. Run in PowerShell:
 `git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"`
 
