@@ -1,6 +1,7 @@
 local lsp = require('lsp-zero').preset({
+    
   name = 'minimal',
-  set_lsp_keymaps = true,
+  set_lsp_keymaps = {omit = {'<F4>'}},
   manage_nvim_cmp = true,
   suggest_lsp_servers = false,
 })
@@ -30,6 +31,7 @@ lsp.on_attach(function(client, bufnr)
   local bind = vim.keymap.set
 
   bind('n', '<leader>vws', function() vim.lsp.buf.workspace_symbol() end, opts)
+  bind('n', '<leader>a', function() vim.lsp.buf.code_action() end, opts)
 end)
 
 lsp.setup()
