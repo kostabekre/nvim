@@ -1,8 +1,5 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
-
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
@@ -14,10 +11,10 @@ return require('packer').startup(function(use)
   }
 
   use ({
-	  '4513ECHO/vim-colors-hatsunemiku',
-	  config = function()
-		  vim.cmd('colorscheme hatsunemiku')
-	  end
+  	  '4513ECHO/vim-colors-hatsunemiku',
+  	  config = function()
+  		  vim.cmd('colorscheme hatsunemiku')
+  	  end
   })
 
   use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
@@ -49,5 +46,10 @@ return require('packer').startup(function(use)
   }
   -- Comment for nvim
   use('terrortylor/nvim-comment')
+
   use('dense-analysis/ale')
+
+  use('mfussenegger/nvim-dap')
+
+  use('jay-babu/mason-nvim-dap.nvim')
 end)
