@@ -6,4 +6,6 @@ Neovim config to work with C# on Windows
 
 2. install [skeeto's wdevkit](https://github.com/skeeto/w64devkit) and add the `bin` folder to the Path
 
-3. Source lua/main_folder/packer.lua and Run `PackerSync` in nvim
+3. enable creating symbolic links for non-admin users (enable ["Developer Mode"](https://www.ghacks.net/2016/12/04/windows-10-creators-update-symlinks-without-elevation)) or refrain from using parsers that use symbolic links in their repos (tree-sitter-typescript, tree-sitter-ocaml). Otherwise tar will fail on extracting those archives on Windows
+
+4. Source lua/main_folder/packer.lua and Run `PackerSync` in nvim
