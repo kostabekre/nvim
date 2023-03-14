@@ -1,12 +1,11 @@
-require("mason-nvim-dap").setup()
+local dap = require('dap')
 
-
-remap <silent> <F5> <Cmd>lua require'dap'.continue()<CR>
-nnoremap <silent> <F10> <Cmd>lua require'dap'.step_over()<CR>
-nnoremap <silent> <F11> <Cmd>lua require'dap'.step_into()<CR>
-nnoremap <silent> <F12> <Cmd>lua require'dap'.step_out()<CR>
-nnoremap <silent> <Leader>b <Cmd>lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <Leader>B <Cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <Leader>lp <Cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <Leader>dr <Cmd>lua require'dap'.repl.open()<CR>
-nnoremap <silent> <Leader>dl <Cmd>lua require'dap'.run_last()<CR>
+vim.keymap.set('n', '<F5>', dap.continue, {})
+vim.keymap.set('n', '<F10>',dap.step_over, {})
+vim.keymap.set('n', '<F11>',dap.step_into, {})
+vim.keymap.set('n', '<F12>',dap.step_out, {})
+vim.keymap.set('n', '<Leader>b',dap.toggle_breakpoint, {})
+-- vim.keymap.set('n', '<Leader>B',dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+-- vim.keymap.set('n', '<Leader>lp',dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+vim.keymap.set('n', '<Leader>dr',dap.repl.open, {})
+vim.keymap.set('n', '<Leader>dl',dap.run_last, {})
