@@ -58,4 +58,8 @@ return require('packer').startup(function(use)
   use('windwp/nvim-autopairs');
 
   use('kylechui/nvim-surround')
+
+  -- rust
+  use('simrat39/rust-tools.nvim')
+  use('nvim-lua/plenary.nvim')
 end)

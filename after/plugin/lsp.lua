@@ -11,6 +11,7 @@ lsp.nvim_workspace()
 
  lsp.ensure_installed({
 	'omnisharp',
+    'rust_analyzer'
  })
 
 local cmp = require('cmp')
