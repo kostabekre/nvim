@@ -54,4 +54,8 @@ return require('packer').startup(function(use)
   use('mfussenegger/nvim-dap')
 
   use('jay-babu/mason-nvim-dap.nvim')
+
+  use('windwp/nvim-autopairs');
+
+  use('kylechui/nvim-surround')
 end)
