@@ -20,9 +20,6 @@ end)
 
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
-vim.keymap.set("n", "<leader>d", [["_d]])
-vim.keymap.set("x", "<leader>d", [["_d]])
-
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
