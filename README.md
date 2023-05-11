@@ -8,7 +8,7 @@ Neovim config to work with C# on Windows
 
     enable creating symbolic links for non-admin users (enable "Developer Mode") or refrain from using parsers that use symbolic links in their repos (tree-sitter-typescript, tree-sitter-ocaml). Otherwise tar will fail on extracting those archives on Windows
     
-    git clone https://github.com/kostabekre/nvim ~/AppData/Local/nvim
+    git clone https://github.com/kostabekre/nvim $env:USERPROFILE\AppData\Local\nvim
 
     Source lua/main_folder/packer.lua and Run PackerSync in nvim
 
