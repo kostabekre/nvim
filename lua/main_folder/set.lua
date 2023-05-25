@@ -14,7 +14,6 @@ vim.opt.wrap = false
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOMEPATH") .. "/.vim/undodir"
 vim.opt.undofile = true
 
 vim.opt.hlsearch = false
@@ -27,3 +26,9 @@ vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
+
+if vim.fn.has('unix') == 0 then
+    vim.opt.undodir = os.getenv("HOMEPATH") .. "/.vim/undodir"
+else
+    vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+end
