@@ -1,6 +1,10 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<C-w>e", vim.cmd.Ex)
 
+-- Or use \c to ignorecase in the end of the search. 
+-- \C uses sensitivity search
+vim.keymap.set("n", "<F9>", "<cmd>set ignorecase! ignorecase?<CR>")
+
 vim.keymap.set("i", "jh", "<Esc>")
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
