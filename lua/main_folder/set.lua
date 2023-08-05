@@ -24,11 +24,12 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
+vim.opt.mouse = "a"
 
 vim.opt.updatetime = 50
 
-if vim.fn.has('unix') == 0 then
-    vim.opt.undodir = os.getenv("HOMEPATH") .. "/.vim/undodir"
-else
+if vim.fn.has('unix') then
     vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+else
+    vim.opt.undodir = os.getenv("HOMEPATH") .. "/.vim/undodir"
 end
