@@ -28,7 +28,7 @@ vim.opt.mouse = "a"
 
 vim.opt.updatetime = 50
 
-if vim.fn.has('unix') then
+if vim.fn.has('unix') == 1 then
     vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 else
     vim.opt.undodir = os.getenv("HOMEPATH") .. "/.vim/undodir"
