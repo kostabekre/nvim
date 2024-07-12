@@ -1,54 +1,57 @@
-vim.g.mapleader = " "
-vim.keymap.set("n", "<C-w>e", vim.cmd.Ex)
+vim.g.mapleader = " " -- leader key
+
+keymap = vim.keymap.set
+
+keymap("n", "<C-w>e", vim.cmd.Ex) -- explorer
 
 -- Or use \c to ignorecase in the end of the search. 
 -- \C uses sensitivity search
-vim.keymap.set("n", "<F9>", "<cmd>set ignorecase! ignorecase?<CR>")
+keymap("n", "<F9>", "<cmd>set ignorecase! ignorecase?<CR>")
 
-vim.keymap.set("i", "jh", "<Esc>")
-vim.keymap.set("i", "<C-c>", "<Esc>")
+keymap("i", "jh", "<Esc>")
+keymap("i", "<C-c>", "<Esc>")
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+keymap("v", "J", ":m '>+1<CR>gv=gv")
+keymap("v", "K", ":m '<-2<CR>gv=gv")
 
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+keymap("n", "J", "mzJ`z")
+keymap("n", "<C-d>", "<C-d>zz")
+keymap("n", "<C-u>", "<C-u>zz")
+keymap("n", "n", "nzzzv")
+keymap("n", "N", "Nzzzv")
 
-vim.keymap.set("n", "H", "gT")
-vim.keymap.set("n", "L", "gt")
+keymap("n", "H", "<C-o>")
+keymap("n", "L", "<C-i>")
 
 -- paste but do not copy
-vim.keymap.set("x", "<leader>p", [["_dP]])
+keymap("x", "<leader>p", [["_dP]])
 -- copy to environment
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+keymap({"n", "v"}, "<leader>y", [["+y]])
+keymap("n", "<leader>Y", [["+Y]])
 -- delete but do not copy
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+keymap({"n", "v"}, "<leader>d", [["_d]])
 
-vim.keymap.set("n", "Q", "<nop>")
+keymap("n", "Q", "<nop>")
 
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+keymap("n", "<C-k>", "<cmd>cnext<CR>zz")
+keymap("n", "<C-j>", "<cmd>cprev<CR>zz")
+keymap("n", "<leader>k", "<cmd>lnext<CR>zz")
+keymap("n", "<leader>j", "<cmd>lprev<CR>zz")
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+keymap("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- Config file
 if vim.fn.has('unix') == 1 then
-    vim.keymap.set("n", "<leader>vc", "<cmd>e ~/.config/nvim/<CR>");
+    keymap("n", "<leader>vc", "<cmd>e ~/.config/nvim/<CR>");
 else
-    vim.keymap.set("n", "<leader>vc", "<cmd>e ~/AppData/Local/nvim/<CR>");
+    keymap("n", "<leader>vc", "<cmd>e ~/AppData/Local/nvim/<CR>");
 end
 
-vim.keymap.set("n", "<leader><leader>", function()
+keymap("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
-vim.keymap.set("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
--- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+keymap("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
+-- keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+keymap("n", "<leader>f", vim.lsp.buf.format)
