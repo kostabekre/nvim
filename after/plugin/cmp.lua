@@ -10,9 +10,12 @@ if not status_ok_2 then
     return
 end
 
-require("luasnip.loaders.from_vscode").lazy_load()
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.shortmess:append "c"
 
-cmp.setup({
+-- require("luasnip.loaders.from_vscode").lazy_load()
+
+cmp.setup{
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -23,54 +26,49 @@ cmp.setup({
         -- documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-k>'] = cmp.mapping.select_prev_item(),
-        ['<C-j>'] = cmp.mapping.select_next_item(),
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-y>'] = cmp.mapping(
+            cmp.mapping.confirm {
+                    behavior = cmp.ConfirmBehavior.Insert,
+                    select = true
+                },
+                {"i", "c"}
+        ),
 
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
-        ['<C-e>'] = cmp.mapping.abort(),
-        ['<C-Space>'] = cmp.mapping.complete(),
-        ['<CR>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                if luasnip.expandable() then
-                    luasnip.expand()
-                else
-                    cmp.confirm({
-                        select = true,
-                    })
-                end
-            else
-                fallback()
-            end
-        end),
-
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.locally_jumpable(1) then
-                luasnip.jump(1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
+        -- ['<C-e>'] = cmp.mapping.abort(),
     }),
 
-    sources = cmp.config.sources({
+    sources = {
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
-    }, {
-        { name = 'buffer' },
         { name = 'path' },
-    })
-})
+        { name = 'buffer' },
+    },
+}
+
+-- TODO what is happening
+-- luasnip.config.set_config {
+--     history = false,
+--     updateevents = "TextChagned,TextChangedI",
+-- }
+
+-- TODO add custom snippets https://www.youtube.com/watch?v=22mrSjknDHI
+-- for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/custom/snippets/*.lua", true)) do
+--     loadfile(ft_path)
+-- end
+
+vim.keymap.set({ "i", "s" }, "c-k>", function()
+    if ls.expand_or_jumpable() then
+        ls.expand_or_jump()
+    end
+end, {silent = true })
+
+vim.keymap.set({ "i", "s" }, "c-j>", function()
+    if ls.jumpable(-1) then
+        ls.jump(-1)
+    end
+end, {silent = true })

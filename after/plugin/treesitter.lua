@@ -5,9 +5,9 @@ if not status_ok then
 end
 
 require 'nvim-treesitter.install'.prefer_git = false
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "typescript", "lua", "vimdoc"  },
+  ensure_installed = { "typescript", "lua", "vimdoc" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -15,6 +15,10 @@ require'nvim-treesitter.configs'.setup {
   -- Automatically install missing parsers when entering buffer
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   auto_install = true,
+
+  indent = { enable = false },
+  -- Disable only for specific languages
+  -- indent = { disable = {"python"}},
 
   highlight = {
     enable = true,
@@ -29,6 +33,3 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
   }
 }
-
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

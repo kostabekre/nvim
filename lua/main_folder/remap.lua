@@ -48,10 +48,9 @@ else
     keymap("n", "<leader>vc", "<cmd>e ~/AppData/Local/nvim/<CR>");
 end
 
-keymap("n", "<leader><leader>", function()
+keymap("n", "<leader><leader>x", function()
     vim.cmd("so")
 end)
 
-keymap("n", "<leader>mr", "<cmd>CellularAutomaton make_it_rain<CR>");
 -- keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-keymap("n", "<leader>f", vim.lsp.buf.format)
+keymap("n", "<leader>lf", vim.lsp.buf.format)

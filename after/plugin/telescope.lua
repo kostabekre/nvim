@@ -1,11 +1,23 @@
-local status_ok, builtin = pcall(require, 'telescope.builtin')
+local status_ok, telescope_builtin = pcall(require, 'telescope.builtin')
 if not status_ok then
     print("telescope is not installed!")
     return
 end
 
-keymap('n', '<leader>ff', builtin.find_files, {})
-keymap('n', '<leader>gf', builtin.git_files, {})
-keymap('n', '<leader>fg', builtin.live_grep, {})
-keymap('n', '<leader>fb', builtin.buffers, {})
-keymap('n', '<leader>fh', builtin.help_tags, {})
+local status_ok_telescope, telescope = pcall(require, 'telescope')
+if not status_ok_telescope then
+    print("telescope is not installed!")
+    return
+end
+
+telescope.setup {
+    defaults = {
+        file_ignore_patterns = {".godot"}
+    }
+}
+
+keymap('n', '<leader>ff', telescope_builtin.find_files, {})
+keymap('n', '<leader>fg', telescope_builtin.git_files, {})
+keymap('n', '<leader>fg', telescope_builtin.live_grep, {})
+keymap('n', '<leader>fb', telescope_builtin.buffers, {})
+keymap('n', '<leader>fh', telescope_builtin.help_tags, {})

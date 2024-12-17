@@ -14,6 +14,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+--- Search for Godot Project
+local projectfile = vim.fn.getcwd() .. '/project.godot'
+if projectfile then
+    vim.fn.serverstart './godothost'
+end
+
 require('lazy').setup({
     {
         "nvim-treesitter/nvim-treesitter", build = ":TSUpdate"
@@ -29,7 +35,7 @@ require('lazy').setup({
 
     'terrortylor/nvim-comment',
     'windwp/nvim-autopairs', 
-    'kylechui/nvim-surround',
+    -- 'kylechui/nvim-surround',
 
     'tpope/vim-dadbod', -- SQL UI
 
@@ -65,7 +71,7 @@ require('lazy').setup({
 
     '4513ECHO/vim-colors-hatsunemiku', -- color 
 
-    'tpope/vim-fugitive', -- git wrapper
+    -- 'tpope/vim-fugitive', -- git wrapper
 
     {
         "folke/which-key.nvim",
@@ -81,16 +87,30 @@ require('lazy').setup({
         }
     },
 
+    --- gdscript (better highlight and intend)
+    {
+        'habamax/vim-godot',
+        event = "BufEnter *.gd"
+    },
+
     'lambdalisue/suda.vim',
 
+    'Hoffs/omnisharp-extended-lsp.nvim',
+
     {
-        'nvimdev/lspsaga.nvim',
-        config = function()
-            require('lspsaga').setup({})
-        end,
+        'mfussenegger/nvim-dap',
         dependencies = {
-            'nvim-treesitter/nvim-treesitter', 
-            'nvim-tree/nvim-web-devicons',     
+            'rcarriga/nvim-dap-ui',
+
+            -- Required dependency for nvim-dap-ui
+            'nvim-neotest/nvim-nio',
+
+            -- Installs the debug adapters for you
+            'williamboman/mason.nvim',
+            'jay-babu/mason-nvim-dap.nvim',
+
+            -- Add your own debuggers here
+            'leoluz/nvim-dap-go',
         }
-    },
+    }
 })
