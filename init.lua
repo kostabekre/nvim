@@ -95,7 +95,10 @@ require('lazy').setup({
 
     'lambdalisue/suda.vim',
 
+    -- csharp omnisharp 'go to' solve issue
     'Hoffs/omnisharp-extended-lsp.nvim',
+    -- chsarp lsp 'go to' solve isssue
+    'Decodetalkers/csharpls-extended-lsp.nvim',
 
     {
         'mfussenegger/nvim-dap',

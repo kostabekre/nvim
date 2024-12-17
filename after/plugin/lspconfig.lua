@@ -96,69 +96,89 @@ lspconfig.lua_ls.setup {
   }
 }
 
-local omniSharpPath = ""
-if vim.fn.has('unix') == 1 then
-    omniSharpPath = vim.fn.stdpath("data") .. "/mason/packages/omnisharp/libexec/OmniSharp.dll"
-else
-    omniSharpPath = vim.fn.stdpath("data") .. "/mason/packages/omnisharp/omnisharp.cmd"
-end
+-- local omniSharpPath = ""
+-- if vim.fn.has('unix') == 1 then
+--     omniSharpPath = vim.fn.stdpath("data") .. "/mason/packages/omnisharp/libexec/OmniSharp.dll"
+-- else
+--     omniSharpPath = vim.fn.stdpath("data") .. "/mason/packages/omnisharp/omnisharp.cmd"
+-- end
+--
+-- local omni_extended_ok_result, omni_extended = pcall(require, "omnisharp_extended")
+-- if not omni_extended_ok_result then
+--     print("omnisharp extendted is not founded")
+--     return
+-- end
 
-local omni_extended_ok_result, omni_extended = pcall(require, "omnisharp_extended")
-if not omni_extended_ok_result then
-    print("omnisharp extendted is not founded")
-    return
-end
-
-local on_attach_omnisharp = function (client, bufnr)
-    opts.buffer = bufnr
-
-    opts.desc = "Show LSP References"
-    keymap("n", "gr", "<cmd>lua require('omnisharp_extended').telescope_lsp_references()<CR>", opts)
-
-    opts.desc = "Go to LSP definitions"
-    keymap("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definition()<CR>", opts)
-
-    opts.desc = "Go to LSP implementations"
-    keymap("n", "gi", "<cmd>lua require('omnisharp_extended').telescope_lsp_implementation()<CR>", opts)
-
-    opts.desc = "Go to LSP type definitions"
-    keymap("n", "gt", "<cmd>lua require('omnisharp_extended').telescope_lsp_type_definition()<CR>", opts)
-
-    opts.desc = "Go to Declaration"
-    keymap("n", "gD", vim.lsp.buf.declaration, opts)
-
-    opts.desc = "See available code actions"
-    keymap({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, opts)
-
-    opts.desc = "Smart rename"
-    keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
-    opts.desc = "Show buffer Diagnostics"
-    keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
-
-    opts.desc = "Show Line Diagnostics"
-    keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
-
-    opts.desc = "Go to Previous Diagnostic"
-    keymap("n", "<leader>[d", vim.diagnostic.goto_prev, opts)
-
-    opts.desc = "Go to Next Diagnostic"
-    keymap("n", "<leader>]d", vim.diagnostic.goto_next, opts)
-
-    opts.desc = "Show Documentation"
-    keymap("n", "<leader>K", vim.lsp.buf.hover, opts)
-
-    opts.desc = "LSP Restart"
-    keymap("n", "<leader>rs", "<cmd>LspRestart<CR>", opts)
-end
+-- local on_attach_omnisharp = function (client, bufnr)
+--     opts.buffer = bufnr
+--
+--     opts.desc = "Show LSP References"
+--     keymap("n", "gr", "<cmd>lua require('omnisharp_extended').telescope_lsp_references()<CR>", opts)
+--
+--     opts.desc = "Go to LSP definitions"
+--     keymap("n", "gd", "<cmd>lua require('omnisharp_extended').telescope_lsp_definition()<CR>", opts)
+--
+--     opts.desc = "Go to LSP implementations"
+--     keymap("n", "gi", "<cmd>lua require('omnisharp_extended').telescope_lsp_implementation()<CR>", opts)
+--
+--     opts.desc = "Go to LSP type definitions"
+--     keymap("n", "gt", "<cmd>lua require('omnisharp_extended').telescope_lsp_type_definition()<CR>", opts)
+--
+--     opts.desc = "Go to Declaration"
+--     keymap("n", "gD", vim.lsp.buf.declaration, opts)
+--
+--     opts.desc = "See available code actions"
+--     keymap({"n", "v"}, "<leader>ca", vim.lsp.buf.code_action, opts)
+--
+--     opts.desc = "Smart rename"
+--     keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
+--
+--     opts.desc = "Show buffer Diagnostics"
+--     keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts)
+--
+--     opts.desc = "Show Line Diagnostics"
+--     keymap("n", "<leader>d", vim.diagnostic.open_float, opts)
+--
+--     opts.desc = "Go to Previous Diagnostic"
+--     keymap("n", "<leader>[d", vim.diagnostic.goto_prev, opts)
+--
+--     opts.desc = "Go to Next Diagnostic"
+--     keymap("n", "<leader>]d", vim.diagnostic.goto_next, opts)
+--
+--     opts.desc = "Show Documentation"
+--     keymap("n", "<leader>K", vim.lsp.buf.hover, opts)
+--
+--     opts.desc = "LSP Restart"
+--     keymap("n", "<leader>rs", "<cmd>LspRestart<CR>", opts)
+-- end
 
 -- For decompilation to work, OmniSharp extension for decompilation support might need to be enabled. See [omnisharp wiki](https://github.com/OmniSharp/omnisharp-roslyn/wiki/Configuration-Options)
-lspconfig.omnisharp.setup{
+-- lspconfig.omnisharp.setup{
+--     capabilities = capabilities,
+--     on_attach = on_attach_omnisharp,
+--     cmd = { "dotnet", omniSharpPath },
+--     enable_roslyn_analysers = true,
+--     enable_import_completion = true,
+--     organize_imports_on_format = true,
+--     filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props', 'csx', 'targets' }
+-- }
+
+local util = require 'lspconfig.util'
+local csharp_ls_extended = require 'csharpls_extended'
+
+lspconfig.csharp_ls.setup{
+    cmd = { 'csharp-ls' },
     capabilities = capabilities,
-    on_attach = on_attach_omnisharp,
-    cmd = { "dotnet", omniSharpPath },
-    enable_roslyn_analysers = true,
-    enable_import_completion = true,
-    organize_imports_on_format = true,
-    filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props', 'csx', 'targets' }
+    handlers = {
+        ["textDocument/definition"] = csharp_ls_extended.handler,
+        ["textDocument/typeDefinition"] = csharp_ls_extended.handler,
+    },
+    on_attach = on_attach,
+    root_dir = function(fname)
+      return util.root_pattern '*.sln'(fname) or util.root_pattern '*.csproj'(fname)
+    end,
+    filetypes = { 'cs' },
+    init_options = {
+      AutomaticWorkspaceInit = true,
+    },
 }
