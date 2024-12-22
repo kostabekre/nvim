@@ -52,5 +52,7 @@ keymap("n", "<leader><leader>x", function()
     vim.cmd("so")
 end)
 
--- keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+if vim.fn.has('unix') == 1 then
+    keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+end
 keymap("n", "<leader>lf", vim.lsp.buf.format)
