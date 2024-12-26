@@ -24,8 +24,8 @@ for key, value in pairs(options) do
     vim.opt[key] = value
 end
 
--- vim.g.vim_markdown_folding_disabled = 1
--- vim.g.vim_markdown_frontmatter = 1
+-- https://github.com/NvChad/NvChad/issues/1907
+vim.highlight.priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
 
 ---@type (string?)
 local homepath

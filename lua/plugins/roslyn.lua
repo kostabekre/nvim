@@ -3,9 +3,11 @@ if vim.fn.has('unix') == 0 then
         {
             "seblj/roslyn.nvim",
             ft = "cs",
+            event = { "BufReadPre", "BufNewFile" },
             opts = {
-                -- your configuration comes here; leave empty for default settings
-            }
+                filewatching = false,
+                broad_search = true,
+            },
         }
     }
 else
