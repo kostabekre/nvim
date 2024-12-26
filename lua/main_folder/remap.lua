@@ -33,8 +33,8 @@ keymap({"n", "v"}, "<leader>d", [["_d]])
 
 keymap("n", "Q", "<nop>")
 
-keymap("n", "<C-k>", "<cmd>cnext<CR>zz")
-keymap("n", "<C-j>", "<cmd>cprev<CR>zz")
+-- keymap("n", "<C-k>", "<cmd>cnext<CR>zz")
+-- keymap("n", "<C-j>", "<cmd>cprev<CR>zz")
 keymap("n", "<leader>k", "<cmd>lnext<CR>zz")
 keymap("n", "<leader>j", "<cmd>lprev<CR>zz")
 

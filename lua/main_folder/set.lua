@@ -17,11 +17,15 @@ local options = {
     signcolumn = "yes",
     mouse = "a",
     updatetime = 50,
+    conceallevel = 2, -- for obsidian UI
 }
 
 for key, value in pairs(options) do
     vim.opt[key] = value
 end
+
+-- vim.g.vim_markdown_folding_disabled = 1
+-- vim.g.vim_markdown_frontmatter = 1
 
 ---@type (string?)
 local homepath

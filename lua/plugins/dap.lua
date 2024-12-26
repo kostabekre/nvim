@@ -27,12 +27,12 @@ return {
                 return
             end
 
-            keymap('n', '<F5>', function() require('dap').continue() end)
+            keymap('n', '<F5>', function() dap.continue() end, {desc = "Continue debuging"})
             keymap('n', '<F10>', function() dap.step_over() end)
             keymap('n', '<F11>', function() dap.step_into() end)
             keymap('n', 'shift + <F11>', function() dap.step_out() end)
             keymap('n', '<F12>', function() dapui.toggle() end)
-            keymap('n', '<Leader>b', function() dap.toggle_breakpoint() end)
+            keymap('n', '<Leader>b', function() dap.toggle_breakpoint() end, {desc = "Toggle breakpoint"} )
             keymap('n', '<Leader>B', function() dap.set_breakpoint() end)
             keymap('n', '<Leader>lp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
             keymap('n', '<Leader>dr', function() dap.repl.open() end)

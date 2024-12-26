@@ -1,6 +1,6 @@
 return {
     {
-        '4513ECHO/vim-colors-hatsunemiku',
+        'notpratheek/vim-sol',
         lazy = false,
         priority = 1000,
         config = function()
@@ -12,11 +12,13 @@ return {
                     return
                 end
 
-                vim.api.nvim_set_hl(0, "Normal", { bg = "none"})
-                vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none"})
+                if color ~= "sol" then
+                    vim.api.nvim_set_hl(0, "Normal", { bg = "none"})
+                    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none"})
+                end
             end
 
-            ColorMyEditor("hatsunemiku")
+            ColorMyEditor("sol")
         end
-    }
+    },
 }
