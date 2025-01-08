@@ -18,58 +18,88 @@ return {
             "nvim-lua/plenary.nvim",
             "hrsh7th/nvim-cmp",
         },
-        opts = {
-            workspaces = {
-                {
-                    name = "personal",
-                    path = "~/MEGAsync/POWER",
-                    overrides = {
-                        notes_subdir = "Base",
+        config = function()
+            local obsidian = require('obsidian')
+
+            obsidian.setup {
+                workspaces = {
+                    {
+                        name = "personal",
+                        path = "~/MEGAsync/POWER",
+                    },
+                    {
+                        name = "work",
+                        path = "~/MEGAsync/WorkVault",
                     },
                 },
-                {
-                    name = "work",
-                    path = "~/MEGAsync/WorkVault",
-                    overrides = {
-                        notes_subdir = "Base",
+
+                notes_subdir = "Base",
+
+                daily_notes = {
+                    folder = "daily"
+                },
+
+                templates = {
+                    folder = "Templates"
+                },
+
+                mappings = {
+                    ['gd'] = {
+                        action = function()
+                            return require("obsidian").util.gf_passthrough()
+                        end,
+                        opts = { noremap = false, expr = true, buffer = true }
+                    },
+                    -- Toggle check-boxes.
+                    ["<leader>ch"] = {
+                        action = function()
+                            return require("obsidian").util.toggle_checkbox()
+                        end,
+                        opts = { buffer = true },
+                    },
+                    -- Smart action depending on context, either follow link or toggle checkbox.
+                    ["<leader>ca"] = {
+                        action = function()
+                            return require("obsidian").util.smart_action()
+                        end,
+                        opts = { buffer = true, expr = true },
                     },
                 },
-            },
-            mappigns = {
-                ['gd'] = {
-                    action = function()
-                        return require("obsidian").util.gf_passthrough()
-                    end,
-                    opts = { noremap = false, expr = true, buffer = true }
+                attachments = {
+                    img_folder = "files",
                 },
-                -- Toggle check-boxes.
-                ["<leader>ch"] = {
-                    action = function()
-                        return require("obsidian").util.toggle_checkbox()
-                    end,
-                    opts = { buffer = true },
-                },
-                -- Smart action depending on context, either follow link or toggle checkbox.
-                ["<leader>ca"] = {
-                    action = function()
-                        return require("obsidian").util.smart_action()
-                    end,
-                    opts = { buffer = true, expr = true },
-                }
-            },
-            attachments = {
-                img_folder = "files",
+
+                ---@return table
+                note_frontmatter_func = function(note)
+                    -- Add the title of the note as an alias.
+                    if note.title then
+                        note:add_alias(note.title)
+                    end
+
+                    -- local out = { id = note.id, aliases = note.aliases, tags = note.tags }
+                    local out = {}
+
+                    -- `note.metadata` contains any manually added fields in the frontmatter.
+                    -- So here we just make sure those fields are kept in the frontmatter.
+                    if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+                        for k, v in pairs(note.metadata) do
+                            out[k] = v
+                        end
+                    end
+
+                    return out
+                end,
             }
-        },
-        -- config = function()
-        --     print('called config')
-        --     vim.keymap.set("n", "gf", function()
-        --       if require("obsidian").util.cursor_on_markdown_link() then
-        --         return "<cmd>ObsidianFollowLink<CR>"
-        --       else
-        --         return "gf"
-        --       end
-        --     end, { noremap = false, expr = true })
-        -- end
+
+            keymap("n", "<leader>oo", "<CMD>ObsidianOpen<CR>", { desc = "Open the current note in obsidian" })
+            keymap("n", "<leader>ob", "<CMD>ObsidianBacklinks<CR>", { desc = "Find backlinks to the note" })
+            keymap("n", "<leader>ol", "<CMD>ObsidianLinks<CR>", { desc = "Find links in the note" })
+            keymap("n", "<leader>os", "<CMD>ObsidianTOC<CR>", { desc = "Show the table of contents" })
+            keymap("n", "<leader>of", "<CMD>ObsidianQuickSwitch<CR>", { desc = "Open quick switch" })
+            keymap("n", "<leader>og", "<CMD>ObsidianSearch<CR>", { desc = "Find in notes" })
+            keymap("n", "<leader>ot", "<CMD>ObsidianTemplate<CR>", { desc = "Insert a template" })
+            keymap("n", "<leader>oe", "<CMD>ObsidianExtractNote<CR>",
+                { desc = "Extract the visual text into a new note and linq to it" })
+        end
     }
 }

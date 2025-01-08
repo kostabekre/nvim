@@ -22,7 +22,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
         keymap("n", "<leader>D", "<cmd>Telescope diagnostics<CR>", { desc = "Show buffer Diagnostics" })
 
-        keymap("n", "<leader>dK", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
+        keymap("n", "<leader>di", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
 
         keymap("n", "<leader>dk", vim.diagnostic.goto_prev, { desc = "Go to Previous Diagnostic" })
 

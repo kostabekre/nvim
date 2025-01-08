@@ -2,7 +2,6 @@ return {
     {
         'neovim/nvim-lspconfig',
         config = function()
-
             local lspconfig = require('lspconfig')
             local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
@@ -10,7 +9,7 @@ return {
 
             lspconfig.gdscript.setup {
                 capabilities = capabilities,
-                -- filetypes = "gdscript"
+                filetypes = { "gdscript" }
             }
 
             lspconfig.lua_ls.setup {
@@ -18,7 +17,7 @@ return {
                 on_init = function(client)
                     if client.workspace_folders then
                         local path = client.workspace_folders[1].name
-                        if vim.uv.fs_stat(path..'/.luarc.json') or vim.uv.fs_stat(path..'/.luarc.jsonc') then
+                        if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
                             return
                         end
                     end
@@ -53,7 +52,7 @@ return {
 
 
             if vim.fn.has('unix') == 1 then
-                lspconfig.csharp_ls.setup{
+                lspconfig.csharp_ls.setup {
                     cmd = { 'csharp-ls' },
                     capabilities = capabilities,
                     handlers = {
@@ -61,7 +60,7 @@ return {
                         ["textDocument/typeDefinition"] = csharp_ls_extended.handler,
                     },
                     root_dir = function(fname)
-                        return util.root_pattern '*.sln'(fname) or util.root_pattern '*.csproj'(fname)
+                        return util.root_pattern '*.sln' (fname) or util.root_pattern '*.csproj' (fname)
                     end,
                     filetypes = { 'cs' },
                     init_options = {
