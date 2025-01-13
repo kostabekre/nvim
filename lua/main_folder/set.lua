@@ -24,6 +24,8 @@ for key, value in pairs(options) do
     vim.opt[key] = value
 end
 
+vim.cmd("language en_US")
+
 -- https://github.com/NvChad/NvChad/issues/1907
 vim.highlight.priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
 
