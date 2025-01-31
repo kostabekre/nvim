@@ -33,15 +33,40 @@ return {
                     },
                 },
 
+                disable_frontmatter = true,
                 notes_subdir = "Base",
+                new_notes_location = "notes_subdir",
 
                 daily_notes = {
-                    folder = "daily"
+                    folder = "Daily"
                 },
 
                 templates = {
                     folder = "Templates"
                 },
+
+                  -- Optional, customize how note IDs are generated given an optional title.
+                  ---@param title string|?
+                  ---@return string
+                  note_id_func = function(title)
+                      local suffix = tostring(os.date("%Y%m%d%H%M"))
+                      if title ~= nil then
+                          -- If title is given, transform it into valid file name.
+                          return suffix .. " " .. title
+                      else
+                          return suffix
+                      end
+                  end,
+                  -- Optional, by default when you use `:ObsidianFollowLink` on a link to an external
+                  -- URL it will be ignored but you can customize this behavior here.
+                  ---@param url string
+                  follow_url_func = function(url)
+                      -- Open the URL in the default web browser.
+                      -- vim.fn.jobstart({"open", url})  -- Mac OS
+                      vim.fn.jobstart({"xdg-open", url})  -- linux
+                      -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
+                      -- vim.ui.open(url) -- need Neovim 0.10.0+
+                  end,
 
                 mappings = {
                     ['gd'] = {
@@ -66,29 +91,8 @@ return {
                     },
                 },
                 attachments = {
-                    img_folder = "files",
+                    img_folder = "Files",
                 },
-
-                ---@return table
-                note_frontmatter_func = function(note)
-                    -- Add the title of the note as an alias.
-                    if note.title then
-                        note:add_alias(note.title)
-                    end
-
-                    -- local out = { id = note.id, aliases = note.aliases, tags = note.tags }
-                    local out = {}
-
-                    -- `note.metadata` contains any manually added fields in the frontmatter.
-                    -- So here we just make sure those fields are kept in the frontmatter.
-                    if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
-                        for k, v in pairs(note.metadata) do
-                            out[k] = v
-                        end
-                    end
-
-                    return out
-                end,
             }
 
             keymap("n", "<leader>oo", "<CMD>ObsidianOpen<CR>", { desc = "Open the current note in obsidian" })
@@ -98,8 +102,8 @@ return {
             keymap("n", "<leader>of", "<CMD>ObsidianQuickSwitch<CR>", { desc = "Open quick switch" })
             keymap("n", "<leader>og", "<CMD>ObsidianSearch<CR>", { desc = "Find in notes" })
             keymap("n", "<leader>ot", "<CMD>ObsidianTemplate<CR>", { desc = "Insert a template" })
-            keymap("n", "<leader>oe", "<CMD>ObsidianExtractNote<CR>",
-                { desc = "Extract the visual text into a new note and linq to it" })
+            keymap({"n", "v"}, "<leader>oe", "<CMD>ObsidianExtractNote ",{ desc = "Extract the visual text into a new note and linq to it" })
+            keymap("n", "<leader>on", "<CMD>ObsidianNew<CR>", {desc = "Create a new note"})
         end
     }
 }
