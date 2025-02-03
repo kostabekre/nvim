@@ -40,6 +40,7 @@ keymap("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 keymap("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+keymap({"n", "i"}, "<D-space>", "<Nop>", {noremap = true, silent = true })
 
 -- Config file
 if vim.fn.has('unix') == 1 then
