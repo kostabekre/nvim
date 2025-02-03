@@ -8,10 +8,10 @@ return {
             -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
             -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
             -- refer to `:h file-pattern` for more examples
-            "BufReadPre " .. vim.fn.expand "~" .. "/MEGAsync/POWER/*.md",
-            "BufNewFile " .. vim.fn.expand "~" .. "/MEGAsync/POWER/*.md",
-            "BufReadPre " .. vim.fn.expand "~" .. "/MEGAsync/WorkVault/*.md",
-            "BufNewFile " .. vim.fn.expand "~" .. "/MEGAsync/WorkVault/*.md",
+            "BufReadPre " .. vim.fn.expand "~" .. "/MEGA/POWER/*.md",
+            "BufNewFile " .. vim.fn.expand "~" .. "/MEGA/POWER/*.md",
+            "BufReadPre " .. vim.fn.expand "~" .. "/MEGA/WorkVault/*.md",
+            "BufNewFile " .. vim.fn.expand "~" .. "/MEGA/WorkVault/*.md",
         },
         dependencies = {
             -- Required.
@@ -25,15 +25,39 @@ return {
                 workspaces = {
                     {
                         name = "personal",
-                        path = "~/MEGAsync/POWER",
+                        path = "~/MEGA/POWER",
                     },
                     {
                         name = "work",
-                        path = "~/MEGAsync/WorkVault",
+                        path = "~/MEGA/WorkVault",
                     },
                 },
 
-                disable_frontmatter = true,
+                ---@return table
+                note_frontmatter_func = function(note)
+                    --if note.title then
+                    --    note:add_alias(note.title)
+                    --end
+
+                    local out = { aliases = note.aliases, tags = note.tags }
+
+                    if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+                        for k, v in pairs(note.metadata) do
+                            if k == 'updated' then
+                                v = tostring(os.date("%Y-%m-%dT%H:%M"))
+                            end
+
+                            out[k] = v
+                        end
+                    end
+
+                    if not out['parent'] then
+                        out['parent'] = ''
+                    end
+
+                    return out
+                end,
+
                 notes_subdir = "Base",
                 new_notes_location = "notes_subdir",
 
@@ -42,7 +66,17 @@ return {
                 },
 
                 templates = {
-                    folder = "Templates"
+                    folder = "Templates",
+                    date_format = "%Y-%m-%dT%H:%M",
+                    substitutions = {
+                        custom_title = function()
+                            --local file_name = require("obsidian").Note.name
+                            --print(file_name)
+                            return "test"
+                            --local name_only = file_name:sub(0, #file_name - 3)
+                            --return string.gmatch(name_only, " ")[1];
+                        end
+                    }
                 },
 
                   -- Optional, customize how note IDs are generated given an optional title.
@@ -70,6 +104,12 @@ return {
 
                 mappings = {
                     ['gd'] = {
+                        action = function()
+                            return require("obsidian").util.gf_passthrough()
+                        end,
+                        opts = { noremap = false, expr = true, buffer = true }
+                    },
+                    ['<C-]>'] = {
                         action = function()
                             return require("obsidian").util.gf_passthrough()
                         end,
@@ -103,7 +143,7 @@ return {
             keymap("n", "<leader>og", "<CMD>ObsidianSearch<CR>", { desc = "Find in notes" })
             keymap("n", "<leader>ot", "<CMD>ObsidianTemplate<CR>", { desc = "Insert a template" })
             keymap({"n", "v"}, "<leader>oe", "<CMD>ObsidianExtractNote ",{ desc = "Extract the visual text into a new note and linq to it" })
-            keymap("n", "<leader>on", "<CMD>ObsidianNew<CR>", {desc = "Create a new note"})
+            keymap("n", "<leader>on", "<CMD>ObsidianNewFromTemplate<CR>", {desc = "Create a new note"})
         end
     }
 }
