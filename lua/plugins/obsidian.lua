@@ -10,8 +10,8 @@ return {
             -- refer to `:h file-pattern` for more examples
             "BufReadPre " .. vim.fn.expand "~" .. "/MEGA/POWER/*.md",
             "BufNewFile " .. vim.fn.expand "~" .. "/MEGA/POWER/*.md",
-            "BufReadPre " .. vim.fn.expand "~" .. "/MEGA/WorkVault/*.md",
-            "BufNewFile " .. vim.fn.expand "~" .. "/MEGA/WorkVault/*.md",
+            "BufReadPre " .. vim.fn.expand "~" .. "/Documents/WorkVault/*.md",
+            "BufNewFile " .. vim.fn.expand "~" .. "/Documents/WorkVault/*.md",
         },
         dependencies = {
             -- Required.
