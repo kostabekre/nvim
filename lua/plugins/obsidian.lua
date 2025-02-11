@@ -29,7 +29,7 @@ return {
                     },
                     {
                         name = "work",
-                        path = "~/MEGA/WorkVault",
+                        path = "~/Documents/WorkVault",
                     },
                 },
 
