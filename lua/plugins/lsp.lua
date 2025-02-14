@@ -14,34 +14,22 @@ return {
 
             local util = require 'lspconfig.util'
 
-            local python_root_files = {
-                'pyproject.toml',
-                'setup.py',
-                'setup.cfg',
-                'requirements.txt',
-                'Pipfile',
-                'pyrightconfig.json',
-                '.git',
-            }
-
-            lspconfig.basedpyright.setup {
+            lspconfig.pylsp.setup {
                 capabilities = capabilities,
-                cmd = { 'basedpyright-langserver', '--stdio' },
+                cmd = { 'pylsp' },
                 filetypes = { 'python' },
                 root_dir = function(fname)
-                    return util.root_pattern(unpack(python_root_files))(fname)
+                    local root_files = {
+                        'pyproject.toml',
+                        'setup.py',
+                        'setup.cfg',
+                        'requirements.txt',
+                        'Pipfile',
+                    }
+                    return util.root_pattern(unpack(root_files))(fname)
+                    or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
                 end,
                 single_file_support = true,
-                settings = {
-                    basedpyright = {
-                        analysis = {
-                            typeCheckingMode = "standard",
-                            autoSearchPaths = true,
-                            useLibraryCodeForTypes = true,
-                            diagnosticMode = 'openFilesOnly',
-                        },
-                    },
-                },
             }
 
             lspconfig.markdown_oxide.setup {
