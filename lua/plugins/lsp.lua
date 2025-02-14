@@ -12,6 +12,48 @@ return {
                 filetypes = { "gdscript" }
             }
 
+            local util = require 'lspconfig.util'
+
+            local python_root_files = {
+                'pyproject.toml',
+                'setup.py',
+                'setup.cfg',
+                'requirements.txt',
+                'Pipfile',
+                'pyrightconfig.json',
+                '.git',
+            }
+
+            lspconfig.basedpyright.setup {
+                cmd = { 'basedpyright-langserver', '--stdio' },
+                filetypes = { 'python' },
+                root_dir = function(fname)
+                    return util.root_pattern(unpack(python_root_files))(fname)
+                end,
+                single_file_support = true,
+                settings = {
+                    basedpyright = {
+                        analysis = {
+                            autoSearchPaths = true,
+                            useLibraryCodeForTypes = true,
+                            diagnosticMode = 'openFilesOnly',
+                        },
+                    },
+                },
+            }
+
+            lspconfig.markdown_oxide.setup {
+                'force',
+                capabilities,
+                {
+                    workspace = {
+                        didChangeWatchedFiles = {
+                            dynamicRegistration = true,
+                        },
+                    },
+                }
+            }
+
             lspconfig.lua_ls.setup {
                 capabilities = capabilities,
                 on_init = function(client)
@@ -47,9 +89,7 @@ return {
                 }
             }
 
-            local util = require 'lspconfig.util'
             local csharp_ls_extended = require 'csharpls_extended'
-
 
             if vim.fn.has('unix') == 1 then
                 lspconfig.csharp_ls.setup {

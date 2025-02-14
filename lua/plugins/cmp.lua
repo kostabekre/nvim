@@ -38,7 +38,14 @@ return {
                     -- ['<C-e>'] = cmp.mapping.abort(),
                 }),
                 sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
+                    {
+                        name = 'nvim_lsp',
+                        options = {
+                            markdown_oxide = {
+                                keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
+                            }
+                        }
+                    },
                     { name = 'luasnip' }, -- For luasnip users.
                 }, {
                     { name = 'path' },
