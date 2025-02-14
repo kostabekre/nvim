@@ -25,6 +25,7 @@ return {
             }
 
             lspconfig.basedpyright.setup {
+                capabilities = capabilities,
                 cmd = { 'basedpyright-langserver', '--stdio' },
                 filetypes = { 'python' },
                 root_dir = function(fname)
@@ -34,6 +35,7 @@ return {
                 settings = {
                     basedpyright = {
                         analysis = {
+                            typeCheckingMode = "standard",
                             autoSearchPaths = true,
                             useLibraryCodeForTypes = true,
                             diagnosticMode = 'openFilesOnly',
