@@ -5,17 +5,21 @@ return {
             local lspconfig = require('lspconfig')
             local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
-            local capabilities = cmp_nvim_lsp.default_capabilities()
+            local default_capabilities = cmp_nvim_lsp.default_capabilities()
 
             lspconfig.gdscript.setup {
-                capabilities = capabilities,
+                capabilities = default_capabilities,
                 filetypes = { "gdscript" }
             }
 
             local util = require 'lspconfig.util'
 
+            lspconfig.jsonls.setup{
+                capabilities = default_capabilities
+            }
+
             lspconfig.pylsp.setup {
-                capabilities = capabilities,
+                capabilities = default_capabilities,
                 cmd = { 'pylsp' },
                 filetypes = { 'python' },
                 root_dir = function(fname)
@@ -34,7 +38,7 @@ return {
 
             lspconfig.markdown_oxide.setup {
                 'force',
-                capabilities,
+                default_capabilities,
                 {
                     workspace = {
                         didChangeWatchedFiles = {
@@ -45,7 +49,7 @@ return {
             }
 
             lspconfig.lua_ls.setup {
-                capabilities = capabilities,
+                capabilities = default_capabilities,
                 on_init = function(client)
                     if client.workspace_folders then
                         local path = client.workspace_folders[1].name
@@ -84,7 +88,7 @@ return {
             if vim.fn.has('unix') == 1 then
                 lspconfig.csharp_ls.setup {
                     cmd = { 'csharp-ls' },
-                    capabilities = capabilities,
+                    capabilities = default_capabilities,
                     handlers = {
                         ["textDocument/definition"] = csharp_ls_extended.handler,
                         ["textDocument/typeDefinition"] = csharp_ls_extended.handler,

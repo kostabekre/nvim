@@ -140,10 +140,13 @@ return {
             keymap("n", "<leader>ol", "<CMD>ObsidianLinks<CR>", { desc = "Find links in the note" })
             keymap("n", "<leader>os", "<CMD>ObsidianTOC<CR>", { desc = "Show the table of contents" })
             keymap("n", "<leader>of", "<CMD>ObsidianQuickSwitch<CR>", { desc = "Open quick switch" })
+            keymap("n", "<leader>oa", function() require("config.telescope.obsidian_utility").setup() end, { desc = "Find aliases" })
             keymap("n", "<leader>og", "<CMD>ObsidianSearch<CR>", { desc = "Find in notes" })
             keymap("n", "<leader>ot", "<CMD>ObsidianTemplate<CR>", { desc = "Insert a template" })
-            keymap({"n", "v"}, "<leader>oe", "<CMD>ObsidianExtractNote ",{ desc = "Extract the visual text into a new note and linq to it" })
+            keymap("n", "<leader>or", "<CMD>ObsidianRename<CR>", { desc = "Rename the note" })
+            keymap({"n", "v"}, "<leader>oe", "<CMD>ObsidianExtractNote<CR>",{ desc = "Extract the visual text into a new note and linq to it" })
             keymap("n", "<leader>on", "<CMD>ObsidianNewFromTemplate<CR>", {desc = "Create a new note"})
+            keymap("n", "<leader>od", "<CMD>ObsidianDailies<CR>", {desc = "Show Dailies"})
         end
     }
 }

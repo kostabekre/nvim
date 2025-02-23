@@ -3,14 +3,26 @@ return {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.8',
         dependencies = {
-            'nvim-lua/plenary.nvim'
+            'nvim-lua/plenary.nvim',
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' 
+            }
         },
         keys = { "<leader>ff", "<leader>fg", "<leader>gf", "<leader>fb", "<leader>fh", "gd", "gt", "gi", "gr" },
         config = function()
             local telescope = require('telescope')
 
-            telescope.setup{
+            telescope.setup {
                 defaults = {
+                    extensions = {
+                        fzf = {
+                            fuzzy = true,
+                            override_generic_sorter = true,
+                            override_file_sorter = true,
+                            case_mode = "smart_case"
+                        }
+                    },
                     file_ignore_patterns = { ".godot", ".git" },
                     preview = {
                         hide_on_startup = true
@@ -20,17 +32,21 @@ return {
                     },
                     mappings = {
                         n = {
-                            ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
+                            ["<C-t>"] = require('telescope.actions.layout').toggle_preview,
+                            ["<C-b>"] = require("telescope.actions").delete_buffer,
                             ["l"] = require('telescope.actions').cycle_history_next,
                             ["h"] = require('telescope.actions').cycle_history_prev,
                         },
                         i = {
-                            ["<C-p>"] = require("telescope.actions.layout").toggle_preview,
+                            ["<C-t>"] = require("telescope.actions.layout").toggle_preview,
+                            ["<C-b>"] = require("telescope.actions").delete_buffer,
                             -- ["<C-j>"] = require "telescope.actions.layout".toggle_results_and_prompt,
                         },
                     }
                 }
             }
+
+            require('telescope').load_extension('fzf')
 
             local telescope_builtin = require('telescope.builtin')
 
