@@ -29,7 +29,7 @@ keymap("x", "<leader>p", [["_dP]])
 keymap({"n", "v"}, "<leader>y", [["+y]])
 keymap("n", "<leader>Y", [["+Y]])
 -- delete but do not copy
-keymap({"n", "v"}, "<leader>d", [["_d]])
+keymap({"n", "v"}, "<leader>dd", [["_d]])
 
 keymap("n", "Q", "<nop>")
 
