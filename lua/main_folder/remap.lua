@@ -2,8 +2,6 @@ vim.g.mapleader = " " -- leader key
 
 keymap = vim.keymap.set
 
-keymap("n", "<C-w>e", vim.cmd.Ex) -- explorer
-
 -- Or use \c to ignorecase in the end of the search. 
 -- \C uses sensitivity search
 keymap("n", "<F9>", "<cmd>set ignorecase! ignorecase?<CR>")

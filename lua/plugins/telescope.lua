@@ -43,6 +43,11 @@ return {
                             -- ["<C-j>"] = require "telescope.actions.layout".toggle_results_and_prompt,
                         },
                     }
+                },
+                pickers = {
+                    buffers = {
+                        sort_mru = true
+                    }
                 }
             }
 
