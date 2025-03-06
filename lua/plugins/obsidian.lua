@@ -1,9 +1,8 @@
 return {
     {
-        "epwalsh/obsidian.nvim",
+        "obsidian-nvim/obsidian.nvim",
         version = "*", -- recommended, use latest release instead of latest commit
         lazy = true,
-        -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
         event = {
             -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
             -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
@@ -59,7 +58,13 @@ return {
                 end,
 
                 notes_subdir = "Base",
-                new_notes_location = "notes_subdir",
+                new_notes_location = "current_dir",
+
+                -- Optional, sort search results by "path", "modified", "accessed", or "created".
+                -- The recommend value is "modified" and `true` for `sort_reversed`, which means, for example,
+                -- that `:ObsidianQuickSwitch` will show the notes sorted by latest modified time
+                sort_by = "modified",
+                sort_reversed = true,
 
                 daily_notes = {
                     folder = "Daily"

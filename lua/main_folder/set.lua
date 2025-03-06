@@ -18,6 +18,10 @@ local options = {
     mouse = "a",
     updatetime = 50,
     conceallevel = 2, -- for obsidian UI
+    foldmethod = "expr",
+    foldexpr = "v:lua.vim.treesitter.foldexpr()",
+    foldtext = "",
+    foldlevel = 99
 }
 
 for key, value in pairs(options) do
