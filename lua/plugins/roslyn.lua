@@ -4,7 +4,7 @@ return {
         ft = "cs",
         event = { "BufReadPre", "BufNewFile" },
         opts = {
-            filewatching = false,
+            filewatching = "auto",
             broad_search = true,
         },
     }
