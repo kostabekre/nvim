@@ -9,6 +9,11 @@ keymap("n", "<F9>", "<cmd>set ignorecase! ignorecase?<CR>")
 keymap("i", "jh", "<Esc>")
 keymap("i", "<C-c>", "<Esc>")
 
+keymap("n", "<C-h>", "<C-w>h")
+keymap("n", "<C-l>", "<C-w>l")
+keymap("n", "<C-k>", "<C-w>k")
+keymap("n", "<C-j>", "<C-w>j")
+
 keymap("v", "J", ":m '>+1<CR>gv=gv")
 keymap("v", "K", ":m '<-2<CR>gv=gv")
 
