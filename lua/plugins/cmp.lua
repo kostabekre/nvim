@@ -53,7 +53,8 @@ return {
                 }),
             }
 
-            -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+            -- Use buffer source for `/` and `?` (if you enabled `native_menu`,
+            -- this won't work anymore).
             cmp.setup.cmdline({ '/', '?' }, {
                 mapping = cmp.mapping.preset.cmdline(),
                 sources = {
@@ -62,15 +63,15 @@ return {
             })
 
             -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-            cmp.setup.cmdline(':', {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    { name = 'path' }
-                }, {
-                    { name = 'cmdline' }
-                }),
-                matching = { disallow_symbol_nonprefix_matching = false }
-            })
+            --cmp.setup.cmdline(':', {
+            --    mapping = cmp.mapping.preset.cmdline(),
+            --    sources = cmp.config.sources({
+            --        { name = 'path' }
+            --    }, {
+            --        { name = 'cmdline' }
+            --    }),
+            --    matching = { disallow_symbol_nonprefix_matching = false }
+            --})
 
             -- TODO what is happening
             -- luasnip.config.set_config {
@@ -83,7 +84,8 @@ return {
             --     loadfile(ft_path)
             -- end
             --
-            -- luasnip is an snippet engine, so we add common snippets.
+            -- luasnip is an snippet engine, but by default it is empty,
+            -- so we add common snippets.
             require("luasnip.loaders.from_vscode").lazy_load()
 
             vim.keymap.set({ "i", "s" }, "<C-K>", function()
