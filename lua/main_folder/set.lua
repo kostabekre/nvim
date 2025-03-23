@@ -17,7 +17,6 @@ local options = {
     signcolumn = "yes",
     mouse = "a",
     updatetime = 50,
-    conceallevel = 2, -- for obsidian UI
     foldmethod = "expr",
     foldexpr = "v:lua.vim.treesitter.foldexpr()",
     foldtext = "",

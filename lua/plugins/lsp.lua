@@ -36,18 +36,6 @@ return {
                 single_file_support = true,
             }
 
-            lspconfig.markdown_oxide.setup {
-                'force',
-                default_capabilities,
-                {
-                    workspace = {
-                        didChangeWatchedFiles = {
-                            dynamicRegistration = true,
-                        },
-                    },
-                }
-            }
-
             lspconfig.lua_ls.setup {
                 capabilities = default_capabilities,
                 on_init = function(client)

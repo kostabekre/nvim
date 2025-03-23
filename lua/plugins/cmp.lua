@@ -40,14 +40,10 @@ return {
                 sources = cmp.config.sources({
                     {
                         name = 'nvim_lsp',
-                        options = {
-                            markdown_oxide = {
-                                keyword_pattern = [[\(\k\| \|\/\|#\)\+]]
-                            }
-                        }
                     },
                     { name = 'luasnip' }, -- For luasnip users.
                 }, {
+                    { name = 'render-markdown' },
                     { name = 'path' },
                     { name = 'buffer' },
                 }),
