@@ -154,7 +154,7 @@ return {
             keymap({"n", "v"}, "<leader>oe", "<CMD>ObsidianExtractNote<CR>",{ desc = "Extract the visual text into a new note and linq to it" })
             keymap("n", "<leader>on", "<CMD>ObsidianNewFromTemplate<CR>", {desc = "Create a new note"})
             keymap("n", "<leader>od", "<CMD>ObsidianDailies<CR>", {desc = "Show Dailies"})
-            keymap("n", "<leader>ots", "<CMD>ObsidianDailies<CR>", {desc = "Show Dailies"})
+            keymap("n", "<leader>ots", "<CMD>ObsidianTags<CR>", {desc = "Show Tags"})
         end
     }
 }
