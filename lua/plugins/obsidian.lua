@@ -150,7 +150,7 @@ return {
             keymap("n", "<leader>oa", function() require("config.telescope.obsidian_utility").setup() end, { desc = "Find aliases" })
             keymap("n", "<leader>og", "<CMD>ObsidianSearch<CR>", { desc = "Find in notes" })
             keymap("n", "<leader>ott", "<CMD>ObsidianTemplate<CR>", { desc = "Insert a template" })
-            keymap("n", "<leader>or", ":ObsidianRename  --dry-run<c-left><left>", { desc = "Rename the note" })
+            keymap("n", "<leader>or", "<CMD>ObsidianRename<CR>", { desc = "Rename the note" })
             keymap({"n", "v"}, "<leader>oe", "<CMD>ObsidianExtractNote<CR>",{ desc = "Extract the visual text into a new note and linq to it" })
             keymap("n", "<leader>on", "<CMD>ObsidianNewFromTemplate<CR>", {desc = "Create a new note"})
             keymap("n", "<leader>od", "<CMD>ObsidianDailies<CR>", {desc = "Show Dailies"})
