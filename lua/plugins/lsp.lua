@@ -58,8 +58,9 @@ return {
                             library = {
                                 vim.env.VIMRUNTIME,
                                 -- Depending on the usage, you might want to add additional paths here.
-                                "${3rd}/luv/library"
+                                "${3rd}/luv/library",
                                 -- "${3rd}/busted/library",
+                                "~/.local/share/nvim/lazy"
                             }
                             -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
                             -- library = vim.api.nvim_get_runtime_file("", true)
@@ -70,28 +71,6 @@ return {
                     Lua = {}
                 }
             }
-
-            local csharp_ls_extended = require 'csharpls_extended'
-
-            -- remporarily comment out chsarp ls to try roslyn 
-            -- if vim.fn.has('unix') == 1 then
-            --     lspconfig.csharp_ls.setup {
-            --         cmd = { 'csharp-ls' },
-            --         capabilities = default_capabilities,
-            --         handlers = {
-            --             ["textDocument/definition"] = csharp_ls_extended.handler,
-            --             ["textDocument/typeDefinition"] = csharp_ls_extended.handler,
-            --         },
-            --         root_dir = function(fname)
-            --             return util.root_pattern '*.sln' (fname) or util.root_pattern '*.csproj' (fname)
-            --         end,
-            --         filetypes = { 'cs' },
-            --         init_options = {
-            --             AutomaticWorkspaceInit = true,
-            --         },
-            --     }
-            -- else
-            -- end
         end
     }
 }
