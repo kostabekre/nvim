@@ -38,10 +38,8 @@ return {
                     -- ['<C-e>'] = cmp.mapping.abort(),
                 }),
                 sources = cmp.config.sources({
-                    {
-                        name = 'nvim_lsp',
-                    },
-                    { name = 'luasnip' }, -- For luasnip users.
+                    { name = 'nvim_lsp', },
+                    { name = 'luasnip' },
                 }, {
                     { name = 'render-markdown' },
                     { name = 'path' },
