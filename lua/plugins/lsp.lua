@@ -7,6 +7,20 @@ return {
 
             local default_capabilities = cmp_nvim_lsp.default_capabilities()
 
+            lspconfig.html.setup {
+                capabilities = default_capabilities
+            }
+
+            lspconfig.vtsls.setup {}
+
+            lspconfig.ltex_plus.setup {
+                settings = {
+                    ltex = {
+                        language = "en-US"
+                    }
+                }
+            }
+
             lspconfig.gdscript.setup {
                 capabilities = default_capabilities,
                 filetypes = { "gdscript" }
