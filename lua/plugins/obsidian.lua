@@ -105,6 +105,12 @@ return {
                       -- vim.ui.open(url) -- need Neovim 0.10.0+
                   end,
 
+                  -- follow_img_func = function(img)
+                      -- vim.fn.jobstart { "qlmanage", "-p", img }  -- Mac OS quick look preview
+                      -- vim.fn.jobstart({"xdg-open", img})  -- linux
+                      -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
+                  -- end,
+
                 mappings = {
                     ['gd'] = {
                         action = function()
