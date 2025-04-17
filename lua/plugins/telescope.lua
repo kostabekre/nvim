@@ -25,7 +25,8 @@ return {
             "gt",
             "gi",
             "gr",
-            "<leader>D"
+            "<leader>D",
+            "<leader>/"
         },
 
         config = function()
@@ -79,6 +80,7 @@ return {
             keymap('n', '<leader>fp', "<CMD>Telescope frecency workspace=CWD path_display={'shorten'}<CR>", { desc = "Previous Files" })
             keymap('n', '<leader>gf', telescope_builtin.git_files, { desc = "Find git files" })
             keymap('n', '<leader>fg', telescope_builtin.live_grep, { desc = "Find in files" })
+            keymap('n', '<leader>/', telescope_builtin.current_buffer_fuzzy_find, { desc = "Find in files" })
             keymap('n', '<leader>fb', telescope_builtin.buffers, { desc = "Find buffers" })
             keymap('n', '<leader>fh', telescope_builtin.help_tags, { desc = "Find help tags" })
             keymap('n', '<leader>fr', telescope_builtin.resume, { desc = "Resume Telescope Search" })
