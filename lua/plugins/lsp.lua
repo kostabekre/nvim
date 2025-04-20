@@ -11,9 +11,12 @@ return {
                 capabilities = default_capabilities
             }
 
-            lspconfig.vtsls.setup {}
+            lspconfig.vtsls.setup {
+                capabilities = default_capabilities,
+            }
 
             lspconfig.ltex_plus.setup {
+                capabilities = default_capabilities,
                 settings = {
                     ltex = {
                         language = "en-US"
@@ -27,6 +30,22 @@ return {
             }
 
             local util = require 'lspconfig.util'
+
+            lspconfig.cssls.setup {
+                capabilities = default_capabilities,
+                default_config = {
+                    cmd = { 'vscode-css-language-server', '--stdio' },
+                    filetypes = { 'css', 'scss', 'less' },
+                    init_options = { provideFormatter = true }, -- needed to enable formatting capabilities
+                    root_dir = util.root_pattern('package.json', '.git'),
+                    single_file_support = true,
+                    settings = {
+                        css = { validate = true },
+                        scss = { validate = true },
+                        less = { validate = true },
+                    }
+                }
+            }
 
             lspconfig.jsonls.setup{
                 capabilities = default_capabilities
