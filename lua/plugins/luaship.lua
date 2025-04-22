@@ -8,5 +8,8 @@ return {
         dependencies = {
             "rafamadriz/friendly-snippets" ,
         },
+        event = {
+			"InsertEnter",
+        }
     },
 }

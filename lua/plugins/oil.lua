@@ -1,13 +1,16 @@
 return {
-    'stevearc/oil.nvim',
-    config = function()
-        vim.keymap.set("n", "<c-w>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+	"stevearc/oil.nvim",
+	keys = {
+		"<C-w>e",
+	},
+	config = function()
+		require("oil").setup({})
 
-        require("oil").setup{}
-    end,
-    -- Optional dependencies
-    dependencies = { { "echasnovski/mini.icons", opts = {} } },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
-    lazy = false,
+		vim.keymap.set("n", "<c-w>e", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+	end,
+	-- Optional dependencies
+	-- dependencies = { { "echasnovski/mini.icons", opts = {} } },
+	dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+	-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+	-- lazy = false,
 }
