@@ -1,6 +1,8 @@
 return {
 	{
-		"obsidian-nvim/obsidian.nvim",
+		dir = "~/source/neovim/plugins/obsidian.nvim",
+		name = "obsidian-dev.nvim",
+		dev = true,
 		-- version = "*", -- recommended, use latest release instead of latest commit
 		lazy = true,
 		event = {
@@ -9,10 +11,8 @@ return {
 			-- refer to `:h file-pattern` for more examples
 			"BufReadPre "
 				.. vim.fn.expand("~")
-				.. "/Documents/PowerVault/*.md",
-			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/PowerVault/*.md",
-			"BufReadPre " .. vim.fn.expand("~") .. "/Documents/WorkVault/*.md",
-			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/WorkVault/*.md",
+				.. "/Documents/TestVault/*.md",
+			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/TestVault/*.md",
 		},
 		dependencies = {
 			-- Required.

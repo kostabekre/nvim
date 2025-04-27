@@ -11,14 +11,16 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			"<leader>gr",
 			--"<cmd>Telescope lsp_references({ include_declaration = false, fname_width = 20 })<CR>",
 			function()
-				require("telescope.builtin").lsp_references({ fname_width = 40 })
+				require("telescope.builtin").lsp_references({ fname_width = 40, include_declaration = false })
 			end,
 			{ desc = "Show LSP References" }
 		)
 
 		vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
 
-		vim.keymap.set("n", "<leader>gd", "<cmd>Telescope lsp_definitions<CR>", { desc = "Go to LSP definitions" })
+		vim.keymap.set("n", "<leader>gd", function()
+			require("telescope.builtin").lsp_definitions({})
+		end, { desc = "Go to LSP definitions" })
 
 		vim.keymap.set(
 			"n",
@@ -33,6 +35,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			"<cmd>Telescope lsp_type_definitions<CR>",
 			{ desc = "Go to LSP type definitions" }
 		)
+
+		vim.keymap.set("n", "<leader>fo", function()
+			require("telescope.builtin").lsp_document_symbols({ symbols = "function" })
+		end, { desc = "Go to LSP functions" })
 
 		vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "See available code actions" })
 
