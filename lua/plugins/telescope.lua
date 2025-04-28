@@ -14,6 +14,7 @@ return {
 				version = "*",
 			},
 		},
+		lazy = true,
 		keys = {
 			"<leader>ff",
 			"<leader>fg",

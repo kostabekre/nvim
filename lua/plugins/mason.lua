@@ -7,9 +7,7 @@ return {
 				"github:Crashdummyy/mason-registry",
 			},
 		},
-		event = {
-			"BufReadPre",
-		},
+		lazy = true,
 		dependencies = {
 			"williamboman/mason-lspconfig.nvim",
 		},
