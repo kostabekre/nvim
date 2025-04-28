@@ -7,7 +7,7 @@ return {
 				"github:Crashdummyy/mason-registry",
 			},
 		},
-		lazy = true,
+		lazy = false,
 		dependencies = {
 			"williamboman/mason-lspconfig.nvim",
 		},
