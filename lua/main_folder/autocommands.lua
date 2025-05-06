@@ -61,13 +61,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = "*",
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
-})
-
 -- Temp solution because roslyn is not always updated automatically
 -- taken from https://github.com/seblyng/roslyn.nvim/wiki#diagnostic-refresh
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
