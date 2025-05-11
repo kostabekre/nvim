@@ -3,18 +3,16 @@ local lsp_group = vim.api.nvim_create_augroup("DefaultLspAttach", { clear = true
 vim.api.nvim_create_autocmd("LspAttach", {
 	group = lsp_group,
 	callback = function()
-		--       TODO: what is it?
-		--       require("config.lspconfig.handlers").handlers()
+		vim.diagnostic.config({
+			float = {
+				source = true,
+				border = "rounded",
+			},
+		})
 
-		vim.keymap.set(
-			"n",
-			"<leader>gr",
-			--"<cmd>Telescope lsp_references({ include_declaration = false, fname_width = 20 })<CR>",
-			function()
-				require("telescope.builtin").lsp_references({ fname_width = 40, include_declaration = false })
-			end,
-			{ desc = "Show LSP References" }
-		)
+		vim.keymap.set("n", "<leader>gr", function()
+			require("telescope.builtin").lsp_references({ fname_width = 40, include_declaration = false })
+		end, { desc = "Show LSP References" })
 
 		vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
 
@@ -48,32 +46,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		vim.keymap.set("n", "<leader>di", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
 
-		vim.keymap.set("n", "<leader>dk", vim.diagnostic.goto_prev, { desc = "Go to Previous Diagnostic" })
+		vim.keymap.set("n", "<leader>dk", function()
+			vim.diagnostic.jump({ count = -1, float = true })
+		end, { desc = "Go to Previous Diagnostic" })
 
-		vim.keymap.set("n", "<leader>dj", vim.diagnostic.goto_next, { desc = "Go to Next Diagnostic" })
+		vim.keymap.set("n", "<leader>dj", function()
+			vim.diagnostic.jump({ count = 1, float = true })
+		end, { desc = "Go to Next Diagnostic" })
 
-		vim.keymap.set("n", "<leader>K", vim.lsp.buf.hover, { desc = "Show Documentation" })
+		vim.keymap.set("n", "K", function()
+			vim.lsp.buf.hover({
+				border = "rounded",
+			})
+		end, { desc = "Show Documentation", buffer = true })
 
 		vim.keymap.set("n", "<leader>rs", "<cmd>LspRestart<CR>", { desc = "LSP Restart" })
 		vim.keymap.set("n", "<leader>th", function()
 			vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 		end, { desc = "Toggle inlay hints" })
-	end,
-})
-
--- Temp solution because roslyn is not always updated automatically
--- taken from https://github.com/seblyng/roslyn.nvim/wiki#diagnostic-refresh
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-	pattern = "*",
-	callback = function()
-		local clients = vim.lsp.get_clients({ name = "roslyn" })
-		if not clients or #clients == 0 then
-			return
-		end
-
-		local buffers = vim.lsp.get_buffers_by_client_id(clients[1].id)
-		for _, buf in ipairs(buffers) do
-			vim.lsp.util._refresh("textDocument/diagnostic", { bufnr = buf })
-		end
 	end,
 })

@@ -86,6 +86,19 @@ return {
 					},
 				},
 
+				completion = {
+					-- Enables completion using nvim_cmp
+					nvim_cmp = true,
+					-- Enables completion using blink.cmp
+					blink = false,
+					-- Trigger completion at 2 chars.
+					min_chars = 2,
+				},
+
+				cache = {
+					use_cache = true,
+				},
+
 				-- Optional, customize how note IDs are generated given an optional title.
 				---@param title string|?
 				---@return string
