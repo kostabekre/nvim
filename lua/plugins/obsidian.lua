@@ -153,26 +153,23 @@ return {
         }
       })
 
-      vim.keymap.set("n", "<leader>oo", "<CMD>ObsidianOpen<CR>", { desc = "Open the current note in obsidian" })
-      vim.keymap.set("n", "<leader>ob", "<CMD>ObsidianBacklinks<CR>", { desc = "Find backlinks to the note" })
-      vim.keymap.set("n", "<leader>ol", "<CMD>ObsidianLinks<CR>", { desc = "Find links in the note" })
-      vim.keymap.set("n", "<leader>os", "<CMD>ObsidianTOC<CR>", { desc = "Show the table of contents" })
-      vim.keymap.set("n", "<leader>of", "<CMD>ObsidianQuickSwitch<CR>", { desc = "Open quick switch" })
-      vim.keymap.set("n", "<leader>oa", function()
-        require("config.telescope.obsidian_utility").setup()
-      end, { desc = "Find aliases" })
-      vim.keymap.set("n", "<leader>og", "<CMD>ObsidianSearch<CR>", { desc = "Find in notes" })
-      vim.keymap.set("n", "<leader>ott", "<CMD>ObsidianTemplate<CR>", { desc = "Insert a template" })
-      vim.keymap.set("n", "<leader>or", "<CMD>ObsidianRename<CR>", { desc = "Rename the note" })
+      vim.keymap.set("n", "<leader>oo", "<CMD>Obsidian open<CR>", { desc = "Open the current note in obsidian" })
+      vim.keymap.set("n", "<leader>ob", "<CMD>Obsidian backlinks<CR>", { desc = "Find backlinks to the note" })
+      vim.keymap.set("n", "<leader>ol", "<CMD>Obsidian links<CR>", { desc = "Find links in the note" })
+      vim.keymap.set("n", "<leader>os", "<CMD>Obsidian toc<CR>", { desc = "Show the table of contents" })
+      vim.keymap.set("n", "<leader>of", "<CMD>Obsidian quick_switch<CR>", { desc = "Open quick switch" })
+      vim.keymap.set("n", "<leader>og", "<CMD>Obsidian search<CR>", { desc = "Find in notes" })
+      vim.keymap.set("n", "<leader>ott", "<CMD>Obsidian template<CR>", { desc = "Insert a template" })
+      vim.keymap.set("n", "<leader>or", "<CMD>Obsidian rename<CR>", { desc = "Rename the note" })
       vim.keymap.set(
         { "n", "v" },
         "<leader>oe",
-        "<CMD>ObsidianExtractNote<CR>",
-        { desc = "Extract the visual text into a new note and linq to it" }
+        "<CMD>Obsidian extract_note<CR>",
+        { desc = "Extract the visual text into a new note and link to it" }
       )
-      vim.keymap.set("n", "<leader>on", "<CMD>ObsidianNewFromTemplate<CR>", { desc = "Create a new note" })
-      vim.keymap.set("n", "<leader>od", "<CMD>ObsidianDailies<CR>", { desc = "Show Dailies" })
-      vim.keymap.set("n", "<leader>ots", "<CMD>ObsidianTags<CR>", { desc = "Show Tags" })
+      vim.keymap.set("n", "<leader>on", "<CMD>Obsidian new_from_template<CR>", { desc = "Create a new note" })
+      vim.keymap.set("n", "<leader>od", "<CMD>Obsidian dailies<CR>", { desc = "Show Dailies" })
+      vim.keymap.set("n", "<leader>ots", "<CMD>Obsidian tags<CR>", { desc = "Show Tags" })
     end,
   },
 }
