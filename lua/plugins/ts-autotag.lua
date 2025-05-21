@@ -1,10 +1,25 @@
 return {
   'windwp/nvim-ts-autotag',
-  ft = {
-    "typescriptreact", "html", "javascript", "markdown", "xml", "typescript"
-  },
+  -- ft = {
+  --   "typescriptreact", "html", "javascript", "markdown", "xml", "typescript"
+  -- },
+  -- event = {
+  --   "BufReadPre", "BufNewFile"
+  -- },
   event = {
-    "BufReadPre", "BufNewFile"
+    {
+      event = {
+        "BufReadPre", "BufNewFile"
+      },
+      pattern = {
+        "*.tsx",
+        "*.html",
+        "*.javascript",
+        "*.md",
+        "*.xml",
+        "*.typescript"
+      }
+    },
   },
   config = function()
     require('nvim-ts-autotag').setup({

@@ -1,5 +1,12 @@
 return {
   "stevearc/conform.nvim",
+  ft = {
+    "lua",
+    "cs",
+    "typescriptreact",
+    "python",
+    "javascript"
+  },
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
