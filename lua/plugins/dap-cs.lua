@@ -1,18 +1,21 @@
 return {
-	"nicholasmata/nvim-dap-cs",
-	dependencies = { "mfussenegger/nvim-dap" },
-	ft = {
-		"cs",
-	},
-	config = function()
-		local mason_registry = require("mason-registry")
-		local netcoredbg = mason_registry.get_package("netcoredbg") -- note that this will error if you provide a non-existent package name
-		local path = netcoredbg:get_install_path() -- returns a string like "/home/user/.local/share/nvim/mason/packages/netcoredbg"
+  "nicholasmata/nvim-dap-cs",
+  dependencies = { "mfussenegger/nvim-dap", "mason-org/mason.nvim" },
+  ft = {
+    "cs",
+  },
+  config = function()
+    local mason_registry = require("mason-registry")
+    local have_netcoredbg = mason_registry.is_installed("netcoredbg")
 
-		require("dap-cs").setup({
-			netcorebg = {
-				path = path,
-			},
-		})
-	end,
+    if have_netcoredbg then
+      require("dap-cs").setup({
+        netcorebg = {
+          path = vim.fn.expand("$MASON/bin/netcoredbg"),
+        },
+      })
+    else
+      print("netcoredbg is not installed!")
+    end
+  end,
 }
