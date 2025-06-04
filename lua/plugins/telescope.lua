@@ -1,7 +1,7 @@
 ---@type string
 local build_command
 
-if has("win32") then
+if vim.fn.has("win32") then
   -- Requires gcc or clang and make
   build_command = "make"
 else
