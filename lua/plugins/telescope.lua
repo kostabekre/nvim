@@ -1,3 +1,14 @@
+---@type string
+local build_command
+
+if has("win32") then
+  -- Requires gcc or clang and make
+  build_command = "make"
+else
+  -- Requires CMake, make, and GCC or Clang on Linux and MacOS
+  build_command = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release"
+end
+
 return {
   {
     "nvim-telescope/telescope.nvim",
@@ -6,7 +17,7 @@ return {
       "nvim-lua/plenary.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+        build = build_command,
       },
       {
         "nvim-telescope/telescope-frecency.nvim",
