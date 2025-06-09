@@ -31,6 +31,7 @@ return {
       "<leader>fg",
       "<leader>gf",
       "<leader>fb",
+      "<leader>fp",
       "<leader>fh",
       "<leader>fr",
       "<leader>gd",
