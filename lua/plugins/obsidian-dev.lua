@@ -96,10 +96,8 @@ return {
         },
 
         cache = {
-          enable = true,
+          enabled = true,
         },
-
-        log_level = vim.log.levels.WARN,
 
         -- Optional, customize how note IDs are generated given an optional title.
         ---@param title string|?
