@@ -38,18 +38,21 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set({ "n", "i" }, "<D-space>", "<Nop>", { noremap = true, silent = true })
 
+-- Buffers
+vim.keymap.set("n", "<Leader>bd", "<cmd>%bd|e#|bd#<CR>", { desc = "Remove all buffers but current" })
+
 -- Config file
 if vim.fn.has("unix") == 1 then
-	vim.keymap.set("n", "<leader>vc", "<cmd>e ~/.config/nvim/<CR>")
+  vim.keymap.set("n", "<leader>vc", "<cmd>e ~/.config/nvim/<CR>")
 else
-	vim.keymap.set("n", "<leader>vc", "<cmd>e ~/AppData/Local/nvim/<CR>")
+  vim.keymap.set("n", "<leader>vc", "<cmd>e ~/AppData/Local/nvim/<CR>")
 end
 
 vim.keymap.set("n", "<leader><leader>x", function()
-	vim.cmd("so")
+  vim.cmd("so")
 end)
 
 if vim.fn.has("unix") == 1 then
-	vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+  vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 end
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
