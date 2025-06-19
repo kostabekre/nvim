@@ -41,6 +41,13 @@ vim.keymap.set({ "n", "i" }, "<D-space>", "<Nop>", { noremap = true, silent = tr
 -- Buffers
 vim.keymap.set("n", "<Leader>bd", "<cmd>%bd|e#|bd#<CR>", { desc = "Remove all buffers but current" })
 
+-- quickfix
+vim.keymap.set("n", "<Leader>qo", "<cmd>co<CR>", { desc = "Open quickfix" })
+vim.keymap.set("n", "<Leader>qj", "<cmd>cp<CR>zz", { desc = "Previous item in quickfix" })
+vim.keymap.set("n", "<Leader>qk", "<cmd>cn<CR>zz", { desc = "Next item in quickfix" })
+vim.keymap.set("n", "<Leader>qp", "<cmd>colder<CR>", { desc = "Previous list of quickfix" })
+vim.keymap.set("n", "<Leader>qn", "<cmd>cnewer<CR>", { desc = "Next list of quickfix" })
+
 -- Config file
 if vim.fn.has("unix") == 1 then
   vim.keymap.set("n", "<leader>vc", "<cmd>e ~/.config/nvim/<CR>")
