@@ -125,33 +125,12 @@ return {
         -- vim.cmd(':silent exec "!start ' .. url .. '"') -- Windows
         -- end,
 
-        mappings = {
-          ["gd"] = {
-            action = function()
-              return require("obsidian").util.gf_passthrough()
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-          },
-          ["<C-]>"] = {
-            action = function()
-              return require("obsidian").util.gf_passthrough()
-            end,
-            opts = { noremap = false, expr = true, buffer = true },
-          },
-          -- Toggle check-boxes.
-          ["<leader>ch"] = {
-            action = function()
-              return require("obsidian").util.toggle_checkbox()
-            end,
-            opts = { buffer = true },
-          },
-          -- Smart action depending on context, either follow link or toggle checkbox.
-          ["<leader>ca"] = {
-            action = function()
-              return require("obsidian").util.smart_action()
-            end,
-            opts = { buffer = true, expr = true },
-          },
+        callbacks = {
+          post_setup = function(_)
+            vim.keymap.set("n", "<leader>gd", "<CMD>Obsidian follow_link<CR>",
+              { desc = "Follow link" })
+            vim.keymap.set("n", "<C-]>", "<CMD>Obsidian follow_link<CR>", { noremap = true, desc = "Follow link" })
+          end,
         },
         attachments = {
           img_folder = "Files",
