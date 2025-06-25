@@ -128,7 +128,7 @@ return {
           enable = false,
         },
         cache = {
-          enabled = true
+          enable = true
         }
       })
 

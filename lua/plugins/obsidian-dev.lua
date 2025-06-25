@@ -96,7 +96,7 @@ return {
         },
 
         cache = {
-          enabled = true,
+          enable = true,
         },
 
         -- Optional, customize how note IDs are generated given an optional title.
