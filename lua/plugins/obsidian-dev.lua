@@ -97,6 +97,7 @@ return {
 
 				cache = {
 					enabled = true,
+					show_tags = true,
 				},
 
 				-- Optional, customize how note IDs are generated given an optional title.
