@@ -1,3 +1,5 @@
+-- Formats a file with given formatters or with LSP if there is no formatter available.
+
 return {
 	"stevearc/conform.nvim",
 	ft = {

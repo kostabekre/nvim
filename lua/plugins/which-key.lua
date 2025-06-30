@@ -1,3 +1,5 @@
+-- Show next keys you need to press to perform a custom binding.
+
 return {
 	{
 		"folke/which-key.nvim",
