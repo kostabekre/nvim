@@ -48,18 +48,21 @@ vim.keymap.set("n", "<Leader>qk", "<cmd>cn<CR>zz", { desc = "Next item in quickf
 vim.keymap.set("n", "<Leader>qp", "<cmd>colder<CR>", { desc = "Previous list of quickfix" })
 vim.keymap.set("n", "<Leader>qn", "<cmd>cnewer<CR>", { desc = "Next list of quickfix" })
 
+-- Case
+vim.keymap.set("i", "<C-f>", "<esc>gUiw`]a", { desc = "Change the text under the cursor to upper case" })
+
 -- Config file
 if vim.fn.has("unix") == 1 then
-  vim.keymap.set("n", "<leader>vc", "<cmd>e ~/.config/nvim/<CR>")
+	vim.keymap.set("n", "<leader>vc", "<cmd>e ~/.config/nvim/<CR>")
 else
-  vim.keymap.set("n", "<leader>vc", "<cmd>e ~/AppData/Local/nvim/<CR>")
+	vim.keymap.set("n", "<leader>vc", "<cmd>e ~/AppData/Local/nvim/<CR>")
 end
 
 vim.keymap.set("n", "<leader><leader>x", function()
-  vim.cmd("so")
+	vim.cmd("so")
 end)
 
 if vim.fn.has("unix") == 1 then
-  vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+	vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 end
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
