@@ -15,9 +15,6 @@ if founded ~= nil then
 	opts.filewatching = "off"
 end
 
-vim.print(cwd)
-vim.print(vim.inspect(opts))
-
 return {
 	{
 		"seblj/roslyn.nvim",
