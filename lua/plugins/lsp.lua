@@ -17,6 +17,26 @@ return {
 
 			lspconfig.ltex_plus.setup({
 				capabilities = default_capabilities,
+				filetypes = {
+					"bib",
+					"context",
+					"gitcommit",
+					"html",
+					"markdown",
+					"org",
+					"pandoc",
+					"plaintex",
+					"quarto",
+					"mail",
+					"mdx",
+					"rmd",
+					"rnoweb",
+					"rst",
+					"tex",
+					"text",
+					"typst",
+					"xhtml",
+				},
 				settings = {
 					ltex = {
 						language = "en-US",
