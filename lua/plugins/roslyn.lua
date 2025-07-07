@@ -1,5 +1,3 @@
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
-local default_capabilities = cmp_nvim_lsp.default_capabilities()
 local uv = vim.uv
 
 local cwd = uv.cwd()
@@ -20,13 +18,7 @@ return {
 		"seblj/roslyn.nvim",
 		ft = "cs",
 		config = function()
-			require("roslyn").setup({
-				broad_search = opts.broad_search,
-				filewatching = opts.filewatching,
-				config = {
-					capabilities = default_capabilities,
-				},
-			})
+			require("roslyn").setup(opts)
 
 			-- Temp solution because roslyn is not always updated automatically
 			-- taken from https://github.com/seblyng/roslyn.nvim/wiki#diagnostic-refresh
@@ -41,8 +33,34 @@ return {
 					local buffers = vim.lsp.get_buffers_by_client_id(clients[1].id)
 					for _, buf in ipairs(buffers) do
 						vim.lsp.util._refresh("textDocument/diagnostic", { bufnr = buf })
+						vim.lsp.codelens.refresh()
 					end
 				end,
+			})
+
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+			vim.lsp.config("roslyn", {
+				on_attach = function()
+					vim.lsp.inlay_hint.enable()
+				end,
+				capabilities = capabilities,
+				settings = {
+					["csharp|inlay_hints"] = {
+						csharp_enable_inlay_hints_for_implicit_object_creation = true,
+						csharp_enable_inlay_hints_for_implicit_variable_types = true,
+						csharp_enable_inlay_hints_for_types = true,
+					},
+					["csharp|code_lens"] = {
+						dotnet_enable_references_code_lens = true,
+					},
+					["csharp|symbol_search"] = {
+						dotnet_search_reference_assemblies = true,
+					},
+					["csharp|completion"] = {
+						dotnet_show_completion_items_from_unimported_namespaces = true,
+					},
+				},
 			})
 		end,
 	},

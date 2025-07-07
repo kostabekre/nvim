@@ -8,11 +8,19 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"saadparwaiz1/cmp_luasnip",
 		},
+		enabled = false,
 		event = {
 			"InsertEnter",
 			"CmdlineEnter",
 		},
 		config = function()
+			-- local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+			-- local has_cs = string.find(bufname, ".cs")
+			--
+			-- if has_cs then
+			-- 	return
+			-- end
+
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 
