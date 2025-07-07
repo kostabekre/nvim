@@ -2,6 +2,7 @@ return {
 	{
 		dir = "~/source/neovim/plugins/obsidian.nvim",
 		name = "obsidian-dev.nvim",
+		enabled = false,
 		dev = true,
 		-- version = "*", -- recommended, use latest release instead of latest commit
 		lazy = true,
@@ -23,6 +24,8 @@ return {
 			local obsidian = require("obsidian")
 
 			obsidian.setup({
+				legacy_commands = false,
+
 				workspaces = {
 					{
 						name = "personal",
@@ -35,6 +38,24 @@ return {
 					{
 						name = "test",
 						path = "~/Documents/TestVault",
+					},
+				},
+				picker = {
+					-- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', 'mini.pick' or 'snacks.pick'.
+					name = "telescope.nvim",
+					-- Optional, configure key mappings for the picker. These are the defaults.
+					-- Not all pickers support all mappings.
+					note_mappings = {
+						-- Create a new note from your query.
+						new = "<C-x>",
+						-- Insert a link to the selected note.
+						insert_link = "<C-l>",
+					},
+					tag_mappings = {
+						-- Add tag(s) to current note.
+						tag_note = "<C-x>",
+						-- Insert a tag at the current location.
+						insert_tag = "<C-l>",
 					},
 				},
 
@@ -146,26 +167,26 @@ return {
 				},
 			})
 
-			vim.keymap.set("n", "<leader>oo", "<CMD>ObsidianOpen<CR>", { desc = "Open the current note in obsidian" })
-			vim.keymap.set("n", "<leader>ob", "<CMD>ObsidianBacklinks<CR>", { desc = "Find backlinks to the note" })
-			vim.keymap.set("n", "<leader>ol", "<CMD>ObsidianLinks<CR>", { desc = "Find links in the note" })
-			vim.keymap.set("n", "<leader>os", "<CMD>ObsidianTOC<CR>", { desc = "Show the table of contents" })
-			vim.keymap.set("n", "<leader>of", "<CMD>ObsidianQuickSwitch<CR>", { desc = "Open quick switch" })
+			vim.keymap.set("n", "<leader>oo", "<CMD>Obsidian open<CR>", { desc = "Open the current note in obsidian" })
+			vim.keymap.set("n", "<leader>ob", "<CMD>Obsidian backlinks<CR>", { desc = "Find backlinks to the note" })
+			vim.keymap.set("n", "<leader>ol", "<CMD>Obsidian links<CR>", { desc = "Find links in the note" })
+			vim.keymap.set("n", "<leader>os", "<CMD>Obsidian TOC<CR>", { desc = "Show the table of contents" })
+			vim.keymap.set("n", "<leader>of", "<CMD>Obsidian quick_switch<CR>", { desc = "Open quick switch" })
 			vim.keymap.set("n", "<leader>oa", function()
 				require("config.telescope.obsidian_utility").setup()
 			end, { desc = "Find aliases" })
-			vim.keymap.set("n", "<leader>og", "<CMD>ObsidianSearch<CR>", { desc = "Find in notes" })
-			vim.keymap.set("n", "<leader>ott", "<CMD>ObsidianTemplate<CR>", { desc = "Insert a template" })
-			vim.keymap.set("n", "<leader>or", "<CMD>ObsidianRename<CR>", { desc = "Rename the note" })
+			vim.keymap.set("n", "<leader>og", "<CMD>Obsidian_search<CR>", { desc = "Find in notes" })
+			vim.keymap.set("n", "<leader>ott", "<CMD>Obsidian_template<CR>", { desc = "Insert a template" })
+			vim.keymap.set("n", "<leader>or", "<CMD>Obsidian_rename<CR>", { desc = "Rename the note" })
 			vim.keymap.set(
 				{ "n", "v" },
 				"<leader>oe",
-				"<CMD>ObsidianExtractNote<CR>",
+				"<CMD>Obsidian extract_note<CR>",
 				{ desc = "Extract the visual text into a new note and linq to it" }
 			)
-			vim.keymap.set("n", "<leader>on", "<CMD>ObsidianNewFromTemplate<CR>", { desc = "Create a new note" })
-			vim.keymap.set("n", "<leader>od", "<CMD>ObsidianDailies<CR>", { desc = "Show Dailies" })
-			vim.keymap.set("n", "<leader>ots", "<CMD>ObsidianTags<CR>", { desc = "Show Tags" })
+			vim.keymap.set("n", "<leader>on", "<CMD>Obsidian new_from_template<CR>", { desc = "Create a new note" })
+			vim.keymap.set("n", "<leader>od", "<CMD>Obsidian dailies<CR>", { desc = "Show Dailies" })
+			vim.keymap.set("n", "<leader>ots", "<CMD>Obsidian tags<CR>", { desc = "Show Tags" })
 		end,
 	},
 }

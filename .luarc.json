@@ -1,0 +1,8 @@
+{
+    "workspace.library": [
+        "~/.local/share/nvim/lazy"
+    ],
+    "diagnostics.globals": [
+        "vim"
+    ]
+}

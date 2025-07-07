@@ -9,10 +9,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			return
 		end
 
-		if client.server_capabilities.signatureHelpProvider then
-			require("lsp-overloads").setup(client, {})
-		end
-
 		vim.diagnostic.config({
 			float = {
 				source = true,
@@ -69,6 +65,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 				border = "rounded",
 			})
 		end, { desc = "Show Documentation", buffer = true })
+
+		vim.keymap.set("n", "<leader>K", function()
+			vim.lsp.buf.signature_help({
+				border = "rounded",
+			})
+		end, { desc = "Show Documentation about the symbol under the cursor", buffer = true })
 
 		vim.keymap.set("n", "<leader>rs", "<cmd>LspRestart<CR>", { desc = "LSP Restart" })
 		vim.keymap.set("n", "<leader>th", function()

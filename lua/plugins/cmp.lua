@@ -7,7 +7,6 @@ return {
 			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lsp",
 			"saadparwaiz1/cmp_luasnip",
-			"Issafalcon/lsp-overloads.nvim", -- show overloads of methods and functions. Lsp is needed too.
 		},
 		event = {
 			"InsertEnter",
