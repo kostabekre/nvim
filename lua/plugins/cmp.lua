@@ -8,19 +8,12 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"saadparwaiz1/cmp_luasnip",
 		},
-		enabled = false,
+		enabled = true,
 		event = {
-			"InsertEnter",
+			--"InsertEnter", --disabled because trying blink.cmp
 			"CmdlineEnter",
 		},
 		config = function()
-			-- local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-			-- local has_cs = string.find(bufname, ".cs")
-			--
-			-- if has_cs then
-			-- 	return
-			-- end
-
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 
@@ -49,32 +42,32 @@ return {
 
 					-- ['<C-e>'] = cmp.mapping.abort(),
 				}),
-				sources = cmp.config.sources({
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-				}, {
-					{ name = "render-markdown" },
-					{ name = "path" },
-					{ name = "buffer" },
-				}),
+				--sources = cmp.config.sources({
+				--	{ name = "nvim_lsp" },
+				--	{ name = "luasnip" },
+				--}, {
+				--	{ name = "render-markdown" },
+				--	{ name = "path" },
+				--	{ name = "buffer" },
+				--}),
 			})
 
 			-- Setup up vim-dadbod
-			cmp.setup.filetype({ "sql" }, {
-				sources = {
-					{ name = "vim-dadbod-completion" },
-					{ name = "buffer" },
-				},
-			})
+			--cmp.setup.filetype({ "sql" }, {
+			--	sources = {
+			--		{ name = "vim-dadbod-completion" },
+			--		{ name = "buffer" },
+			--	},
+			--})
 
 			-- Use buffer source for `/` and `?` (if you enabled `native_menu`,
 			-- this won't work anymore).
-			cmp.setup.cmdline({ "/", "?" }, {
-				mapping = cmp.mapping.preset.cmdline(),
-				sources = {
-					{ name = "buffer" },
-				},
-			})
+			--cmp.setup.cmdline({ "/", "?" }, {
+			--	mapping = cmp.mapping.preset.cmdline(),
+			--	sources = {
+			--		{ name = "buffer" },
+			--	},
+			--})
 
 			-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 			cmp.setup.cmdline(":", {

@@ -4,14 +4,8 @@ return {
 		config = function()
 			local lspconfig = require("lspconfig")
 
-			local default_capabilities
-			local has_cmp, cmp = pcall(require, "cmp_nvim_lsp")
-
-			if has_cmp then
-				default_capabilities = cmp.default_capabilities()
-			else
-				default_capabilities = require("blink.cmp").get_lsp_capabilities()
-			end
+			--local default_capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local default_capabilities = require("blink.cmp").get_lsp_capabilities()
 
 			lspconfig.html.setup({
 				capabilities = default_capabilities,
