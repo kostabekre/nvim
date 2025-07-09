@@ -1,5 +1,9 @@
 -- HTTP client. As postman, but in your editor.
 
+if vim.fn.has("win32") then
+	return {}
+end
+
 return {
 	"rest-nvim/rest.nvim",
 	dependencies = {
