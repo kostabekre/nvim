@@ -1,6 +1,6 @@
 -- HTTP client. As postman, but in your editor.
 
-if vim.fn.has("win32") then
+if vim.fn.has("win32") == 1 then
 	return {}
 end
 

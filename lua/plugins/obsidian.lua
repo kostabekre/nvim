@@ -41,6 +41,12 @@ return {
 					},
 				},
 
+				completion = {
+					nvim_cmp = true,
+					blink = false,
+					create_new = false,
+				},
+
 				picker = {
 					-- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', 'mini.pick' or 'snacks.pick'.
 					name = "telescope.nvim",
@@ -108,6 +114,10 @@ return {
 					},
 				},
 
+				backlinks = {
+					parse_headers = false,
+				},
+
 				-- Optional, customize how note IDs are generated given an optional title.
 				---@param title string|?
 				---@return string
@@ -154,6 +164,7 @@ return {
 				},
 				cache = {
 					enabled = true,
+					path = ".cache.json",
 				},
 			})
 

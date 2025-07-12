@@ -5,10 +5,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(ev)
 		local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
-		if client == nil or client.name == "render-markdown" or client.name == "ltex_plus" then
-			return
-		end
-
 		vim.diagnostic.config({
 			float = {
 				source = true,
@@ -22,9 +18,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 		vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
 
-		vim.keymap.set("n", "<leader>gd", function()
-			require("telescope.builtin").lsp_definitions({})
-		end, { desc = "Go to LSP definitions" })
+		-- temporarly added here, because it's overriding obsidian mapping.
+		if client.name ~= "render-markdown" or client.name ~= "ltex_plus" then
+			vim.keymap.set("n", "<leader>gd", function()
+				require("telescope.builtin").lsp_definitions({})
+			end, { desc = "Go to LSP definitions" })
+		end
 
 		vim.keymap.set(
 			"n",

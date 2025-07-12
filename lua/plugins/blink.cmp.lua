@@ -2,7 +2,7 @@ local lazyOpts = {
 	build = "cargo build --release",
 }
 
-if vim.fn.has("win32") then
+if vim.fn.has("win32") == 1 then
 	lazyOpts.build = nil
 	lazyOpts.version = "1.*"
 end
@@ -54,5 +54,5 @@ return {
 		-- See the fuzzy documentation for more information
 		fuzzy = { implementation = "prefer_rust_with_warning" },
 	},
-	opts_extend = { "sources.default" },
+	-- opts_extend = { "sources.default" },
 }
