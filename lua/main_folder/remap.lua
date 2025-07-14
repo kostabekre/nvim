@@ -63,6 +63,7 @@ vim.keymap.set("n", "<leader><leader>x", function()
 end)
 
 if vim.fn.has("unix") == 1 then
-	vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+	-- vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+	vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmuxinator-fzf.start.sh<CR>")
 end
 vim.keymap.set("n", "<leader>lf", vim.lsp.buf.format)
