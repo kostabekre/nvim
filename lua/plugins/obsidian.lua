@@ -166,6 +166,19 @@ return {
 					enabled = true,
 					path = ".cache.json",
 				},
+
+				statusline = {
+					enabled = false,
+				},
+
+				---@class obsidian.config.FooterOpts
+				footer = {
+					enabled = true,
+					--format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars",
+					format = "{{backlinks}} backlinks",
+					hl_group = "Comment",
+					separator = string.rep("-", 80),
+				},
 			})
 
 			vim.keymap.set("n", "<leader>oo", "<CMD>Obsidian open<CR>", { desc = "Open the current note in obsidian" })
