@@ -7,13 +7,22 @@ return {
 				"nvim-lua/plenary.nvim",
 				"nvim-telescope/telescope.nvim",
 			},
-			keys = { "<leader>a", "<C-e>", "<C-h>", "<C-t>", "<C-n>", "<C-g>", "<C-S-P>", "<C-S-N>" },
+			keys = {
+				"<C-e>",
+				"<leader>ha",
+				"<leader>hi",
+				"<leader>he",
+				"<leader>hh",
+				"<leader>hf",
+				"<C-S-P>",
+				"<C-S-N>",
+			},
 			config = function()
 				local harpoon = require("harpoon")
 
 				harpoon:setup()
 
-				vim.keymap.set("n", "<leader>a", function()
+				vim.keymap.set("n", "<leader>ha", function()
 					harpoon:list():add()
 				end, { desc = "Add to harpoon list" })
 
@@ -21,9 +30,9 @@ return {
 					harpoon:list():select(1)
 				end, { desc = "Go to fIrst harpoon item" })
 
-				vim.keymap.set("n", "<leader>hc", function()
+				vim.keymap.set("n", "<leader>he", function()
 					harpoon:list():select(2)
-				end, { desc = "Go to seCond harpoon item" })
+				end, { desc = "Go to sEcond harpoon item" })
 
 				vim.keymap.set("n", "<leader>hh", function()
 					harpoon:list():select(3)
@@ -60,7 +69,7 @@ return {
 						:find()
 				end
 
-				vim.keymap.set("n", "<leader>he", function()
+				vim.keymap.set("n", "<C-e>", function()
 					harpoon.ui:toggle_quick_menu(harpoon:list())
 				end)
 				-- vim.keymap.set("n", "<C-e>", function()
