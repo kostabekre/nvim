@@ -8,9 +8,8 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"saadparwaiz1/cmp_luasnip",
 		},
-		enabled = true,
 		event = {
-			--"InsertEnter", --disabled because trying blink.cmp
+			"InsertEnter",
 			"CmdlineEnter",
 		},
 		config = function()
@@ -19,6 +18,8 @@ return {
 
 			vim.opt.completeopt = { "menu", "menuone", "noselect" }
 			vim.opt.shortmess:append("c")
+
+			vim.keymap.set("i", "<C-space>", "<nop>")
 
 			cmp.setup({
 				snippet = {
@@ -36,38 +37,38 @@ return {
 						}),
 						{ "i", "c" }
 					),
-
 					["<C-d>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 
-					-- ['<C-e>'] = cmp.mapping.abort(),
+					["<C-e>"] = cmp.mapping.abort(),
+					["<C-space>"] = cmp.mapping.complete(),
 				}),
-				--sources = cmp.config.sources({
-				--	{ name = "nvim_lsp" },
-				--	{ name = "luasnip" },
-				--}, {
-				--	{ name = "render-markdown" },
-				--	{ name = "path" },
-				--	{ name = "buffer" },
-				--}),
+				sources = cmp.config.sources({
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
+				}, {
+					{ name = "render-markdown" },
+					{ name = "path" },
+					{ name = "buffer" },
+				}),
 			})
 
 			-- Setup up vim-dadbod
-			--cmp.setup.filetype({ "sql" }, {
-			--	sources = {
-			--		{ name = "vim-dadbod-completion" },
-			--		{ name = "buffer" },
-			--	},
-			--})
+			cmp.setup.filetype({ "sql" }, {
+				sources = {
+					{ name = "vim-dadbod-completion" },
+					{ name = "buffer" },
+				},
+			})
 
 			-- Use buffer source for `/` and `?` (if you enabled `native_menu`,
 			-- this won't work anymore).
-			--cmp.setup.cmdline({ "/", "?" }, {
-			--	mapping = cmp.mapping.preset.cmdline(),
-			--	sources = {
-			--		{ name = "buffer" },
-			--	},
-			--})
+			cmp.setup.cmdline({ "/", "?" }, {
+				mapping = cmp.mapping.preset.cmdline(),
+				sources = {
+					{ name = "buffer" },
+				},
+			})
 
 			-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 			cmp.setup.cmdline(":", {
@@ -96,14 +97,12 @@ return {
 			require("luasnip.loaders.from_vscode").lazy_load()
 
 			vim.keymap.set({ "i", "s" }, "<C-K>", function()
-				print("trying expand of jump my config")
 				if luasnip.expand_or_jumpable() then
 					luasnip.expand_or_jump()
 				end
 			end, { silent = true })
 
 			vim.keymap.set({ "i", "s" }, "<C-J>", function()
-				print("trying to jump back my config")
 				if luasnip.jumpable(-1) then
 					luasnip.jump(-1)
 				end

@@ -16,15 +16,19 @@ return {
 				vim.keymap.set("n", "<leader>a", function()
 					harpoon:list():add()
 				end, { desc = "Add to harpoon list" })
+
 				vim.keymap.set("n", "<leader>hi", function()
 					harpoon:list():select(1)
 				end, { desc = "Go to fIrst harpoon item" })
-				vim.keymap.set("n", "<leader>he", function()
+
+				vim.keymap.set("n", "<leader>hc", function()
 					harpoon:list():select(2)
-				end, { desc = "Go to sEcond harpoon item" })
+				end, { desc = "Go to seCond harpoon item" })
+
 				vim.keymap.set("n", "<leader>hh", function()
 					harpoon:list():select(3)
 				end, { desc = "Go to tHird harpoon item" })
+
 				vim.keymap.set("n", "<leader>hf", function()
 					harpoon:list():select(4)
 				end, { desc = "Go to Fourth harpoon item" })
@@ -56,7 +60,7 @@ return {
 						:find()
 				end
 
-				vim.keymap.set("n", "<C-e>", function()
+				vim.keymap.set("n", "<leader>he", function()
 					harpoon.ui:toggle_quick_menu(harpoon:list())
 				end)
 				-- vim.keymap.set("n", "<C-e>", function()

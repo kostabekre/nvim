@@ -12,6 +12,7 @@ return {
 	-- optional: provides snippets for the snippet source
 	dependencies = { "rafamadriz/friendly-snippets" },
 
+	enabled = false,
 	build = lazyOpts.build,
 	version = lazyOpts.version,
 
