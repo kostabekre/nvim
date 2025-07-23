@@ -32,7 +32,7 @@ return {
 
 					local buffers = vim.lsp.get_buffers_by_client_id(clients[1].id)
 					for _, buf in ipairs(buffers) do
-						vim.lsp.util._refresh("textDocument/diagnostic", { bufnr = buf })
+						-- vim.lsp.util._refresh("textDocument/diagnostic", { bufnr = buf }) -- disabled because _refresh is not longer available
 						vim.lsp.codelens.refresh()
 					end
 				end,
