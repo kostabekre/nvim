@@ -23,7 +23,7 @@ return {
 			-- Temp solution because roslyn is not always updated automatically
 			-- taken from https://github.com/seblyng/roslyn.nvim/wiki#diagnostic-refresh
 			vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-				pattern = "*",
+				pattern = "*.cs",
 				callback = function()
 					local clients = vim.lsp.get_clients({ name = "roslyn" })
 					if not clients or #clients == 0 then
@@ -31,9 +31,12 @@ return {
 					end
 
 					local buffers = vim.lsp.get_buffers_by_client_id(clients[1].id)
+					local client = clients[1]
 					for _, buf in ipairs(buffers) do
-						-- vim.lsp.util._refresh("textDocument/diagnostic", { bufnr = buf }) -- disabled because _refresh is not longer available
-						vim.lsp.codelens.refresh()
+						client:request(vim.lsp.protocol.Methods.textDocument_diagnostic, {
+							textDocument = vim.lsp.util.make_text_document_params(buf),
+						}, nil, buf)
+						-- vim.lsp.buf.vim.lsp.codelens.refresh() -- throws error
 					end
 				end,
 			})
