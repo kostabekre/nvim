@@ -17,6 +17,7 @@ local options = {
 	signcolumn = "yes",
 	mouse = "a",
 	updatetime = 50,
+	colorcolumn = "80",
 	-- foldmethod = "expr",
 	-- foldexpr = "v:lua.vim.treesitter.foldexpr()",
 	-- foldtext = "",

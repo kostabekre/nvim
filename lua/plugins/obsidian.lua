@@ -196,7 +196,16 @@ return {
 				{ desc = "Extract the visual text into a new note and link to it" }
 			)
 			vim.keymap.set("n", "<leader>on", "<CMD>Obsidian new_from_template<CR>", { desc = "Create a new note" })
-			vim.keymap.set("n", "<leader>od", "<CMD>Obsidian dailies<CR>", { desc = "Show Dailies" })
+			vim.keymap.set("n", "<leader>odd", "<CMD>Obsidian dailies<CR>", { desc = "Show Dailies" })
+
+			vim.keymap.set("n", "<leader>odm", function()
+				vim.api.nvim_cmd({ cmd = "Obsidian", args = { "quick_switch", tostring(os.date("%Y-%m.md")) } }, {})
+			end, { desc = "Open Month Note" })
+
+			vim.keymap.set("n", "<leader>odt", function()
+				vim.api.nvim_cmd({ cmd = "Obsidian", args = { "today", "+1" } }, {})
+			end, { desc = "Open Tommorow Note" })
+
 			vim.keymap.set("n", "<leader>ots", "<CMD>Obsidian tags<CR>", { desc = "Show Tags" })
 		end,
 	},
