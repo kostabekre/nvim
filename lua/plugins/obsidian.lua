@@ -70,7 +70,7 @@ return {
 				note_frontmatter_func = function(note)
 					local out = { aliases = note.aliases, tags = note.tags }
 
-					if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+					if note.metadata and not vim.tbl_isempty(note.metadata) then
 						for k, v in pairs(note.metadata) do
 							if k == "updated" then
 								v = tostring(os.date("%Y-%m-%dT%H:%M"))
@@ -82,6 +82,14 @@ return {
 
 					if not out["parent"] then
 						out["parent"] = ""
+					end
+
+					if not out["created"] then
+						out["created"] = tostring(os.date("%Y-%m-%dT%H:%M"))
+					end
+
+					if not out["updated"] then
+						out["updated"] = tostring(os.date("%Y-%m-%dT%H:%M"))
 					end
 
 					return out
@@ -196,6 +204,13 @@ return {
 				{ desc = "Extract the visual text into a new note and link to it" }
 			)
 			vim.keymap.set("n", "<leader>on", "<CMD>Obsidian new_from_template<CR>", { desc = "Create a new note" })
+			vim.keymap.set("n", "<leader>op", function()
+				vim.cmd("normal gg")
+				vim.cmd("normal /parent")
+				vim.cmd("normal n")
+				vim.cmd("normal f[")
+				vim.cmd("Obsidian follow_link")
+			end, { desc = "Open Parent Note" })
 			vim.keymap.set("n", "<leader>odd", "<CMD>Obsidian dailies<CR>", { desc = "Show Dailies" })
 
 			vim.keymap.set("n", "<leader>odm", function()

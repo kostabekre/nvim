@@ -17,11 +17,7 @@ local options = {
 	signcolumn = "yes",
 	mouse = "a",
 	updatetime = 50,
-	colorcolumn = "80",
-	-- foldmethod = "expr",
-	-- foldexpr = "v:lua.vim.treesitter.foldexpr()",
-	-- foldtext = "",
-	-- foldlevel = 99,
+	-- colorcolumn = "80", it's better to use only for specific languages
 }
 
 for key, value in pairs(options) do
