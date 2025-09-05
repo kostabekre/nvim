@@ -1,8 +1,8 @@
-if vim.fn.has('unix') == 0 then
-    print("If you want to use sudo, install gsudo")
+if vim.fn.has("unix") == 0 then
+	return {}
 end
 
 return {
-    'lambdalisue/suda.vim',
-    cmd = { "SudaRead", "SudaWrite" }
+	"lambdalisue/suda.vim",
+	cmd = { "SudaRead", "SudaWrite" },
 }

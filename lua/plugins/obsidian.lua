@@ -1,3 +1,7 @@
+if vim.fn.hostname() ~= "micer" then
+	return {}
+end
+
 return {
 	{
 		"kostabekre/obsidian.nvim",
@@ -181,7 +185,7 @@ return {
 
 				---@class obsidian.config.FooterOpts
 				footer = {
-					enabled = true,
+					enabled = false,
 					--format = "{{backlinks}} backlinks  {{properties}} properties  {{words}} words  {{chars}} chars",
 					format = "{{backlinks}} backlinks",
 					hl_group = "Comment",
@@ -198,19 +202,18 @@ return {
 			vim.keymap.set("n", "<leader>ott", "<CMD>Obsidian template<CR>", { desc = "Insert a template" })
 			vim.keymap.set("n", "<leader>or", "<CMD>Obsidian rename<CR>", { desc = "Rename the note" })
 			vim.keymap.set(
-				{ "n", "v" },
+				{ "x" },
 				"<leader>oe",
-				"<CMD>Obsidian extract_note<CR>",
+				":Obsidian extract_note<CR>",
 				{ desc = "Extract the visual text into a new note and link to it" }
 			)
 			vim.keymap.set("n", "<leader>on", "<CMD>Obsidian new_from_template<CR>", { desc = "Create a new note" })
-			vim.keymap.set("n", "<leader>op", function()
-				vim.cmd("normal gg")
-				vim.cmd("normal /parent")
-				vim.cmd("normal n")
-				vim.cmd("normal f[")
-				vim.cmd("Obsidian follow_link")
-			end, { desc = "Open Parent Note" })
+			vim.keymap.set(
+				"n",
+				"<leader>op",
+				"gg/parent<CR>nf[<CMD>Obsidian follow_link<CR>",
+				{ desc = "Open Parent Note" }
+			)
 			vim.keymap.set("n", "<leader>odd", "<CMD>Obsidian dailies<CR>", { desc = "Show Dailies" })
 
 			vim.keymap.set("n", "<leader>odm", function()

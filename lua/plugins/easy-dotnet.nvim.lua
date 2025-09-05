@@ -2,7 +2,6 @@ return {
 	{
 		"GustavEikaas/easy-dotnet.nvim",
 		dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
-		dir = "~/source/neovim/plugins/easy-dotnet.nvim",
 		config = function()
 			require("easy-dotnet").setup({
 				auto_bootstrap_namespace = {
