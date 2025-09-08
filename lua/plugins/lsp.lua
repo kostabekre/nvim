@@ -44,10 +44,21 @@ return {
 				},
 			})
 
-			lspconfig.gdscript.setup({
-				capabilities = default_capabilities,
-				filetypes = { "gdscript" },
-			})
+			if vim.fn.has("unix") == 0 then
+				-- founded solution on https://mb-izzo.github.io/nvim-godot-solution/
+				lspconfig.gdscript.setup({
+					force_setup = true, -- because the LSP is global. Read more on lsp-zero docs about this.
+					single_file_support = false,
+					cmd = { "ncat", "127.0.0.1", "6008" }, -- the important trick for Windows! Install netcat if you don't have!
+					root_dir = require("lspconfig.util").root_pattern("project.godot", ".git"),
+					filetypes = { "gdscript" },
+				})
+			else
+				lspconfig.gdscript.setup({
+					capabilities = default_capabilities,
+					filetypes = { "gdscript" },
+				})
+			end
 
 			local util = require("lspconfig.util")
 
