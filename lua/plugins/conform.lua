@@ -8,6 +8,7 @@ return {
 		"typescriptreact",
 		"python",
 		"javascript",
+		"gdscript",
 	},
 	config = function()
 		require("conform").setup({
