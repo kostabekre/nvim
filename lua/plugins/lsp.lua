@@ -49,7 +49,7 @@ return {
 				lspconfig.gdscript.setup({
 					force_setup = true, -- because the LSP is global. Read more on lsp-zero docs about this.
 					single_file_support = false,
-					cmd = { "ncat", "127.0.0.1", "6008" }, -- the important trick for Windows! Install netcat if you don't have!
+					cmd = { "nc", "127.0.0.1", "6008" }, -- the important trick for Windows! Install netcat if you don't have!
 					root_dir = require("lspconfig.util").root_pattern("project.godot", ".git"),
 					filetypes = { "gdscript" },
 				})
