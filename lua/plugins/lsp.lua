@@ -45,11 +45,8 @@ return {
 			})
 
 			if vim.fn.has("unix") == 0 then
-				-- founded solution on https://mb-izzo.github.io/nvim-godot-solution/
 				vim.lsp.config("gdscript", {
 					--force_setup = true, -- because the LSP is global. Read more on lsp-zero docs about this.
-					--single_file_support = false,
-					--cmd = { "nc", "127.0.0.1", "6005" }, -- the important trick for Windows! Install netcat if you don't have!
 					capabilities = default_capabilities,
 				})
 			else
