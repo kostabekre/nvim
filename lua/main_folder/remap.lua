@@ -21,6 +21,16 @@ vim.keymap.set("n", "L", "<C-i>")
 
 -- paste but do not copy
 vim.keymap.set("x", "<leader>p", [["_dP]])
+-- paste in edit mode and preserve spaces. The problem - when you paste from a register in the insert mode,
+-- all characters affected as if typed, so settings from 'softtabstop', 'expandtab', 'autoindent',
+-- and 'smartindent' affectthe pasted text. Solution for this - set vim.opt.paste to true,
+-- paste the text, and set the vim.opt.paste to false again
+-- vim.keymap.set("i", '<C-r>"', function()
+-- 	vim.opt.paste = true
+-- TODO find the way to paste the text from " register in the insert mode
+-- 	vim.opt.paste = false
+-- end)
+
 -- copy to environment
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])

@@ -3,6 +3,9 @@
 return {
 	{
 		"christoomey/vim-tmux-navigator",
+		cond = function(_)
+			return vim.fn.has("unix") == 1
+		end,
 		cmd = {
 			"TmuxNavigateLeft",
 			"TmuxNavigateDown",

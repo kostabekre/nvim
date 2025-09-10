@@ -1,13 +1,20 @@
-if vim.fn.hostname() ~= "micer" then
-	return {}
-end
-
 return {
 	{
 		"kostabekre/obsidian.nvim",
 		-- version = "*", -- recommended, use latest release instead of latest commit
 		lazy = true,
 		branch = "develop",
+		cond = function(_)
+			local allowed_hosts = { "micer", "termipad", "gigaflow" }
+
+			local host = vim.fn.hostname()
+			for _, allowed_host in ipairs(allowed_hosts) do
+				if host == allowed_host then
+					return true
+				end
+			end
+			return false
+		end,
 		event = {
 			-- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
 			-- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"

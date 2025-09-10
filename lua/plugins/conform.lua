@@ -12,6 +12,7 @@ return {
 	},
 	config = function()
 		require("conform").setup({
+			-- PAY ATTENTION at the ft above, if you use new language
 			formatters_by_ft = {
 				lua = { "stylua" },
 				--cs = { "csharpier" }, -- doesn't work, so it's fallbacked to LSP (roslyn)
