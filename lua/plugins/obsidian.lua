@@ -46,10 +46,6 @@ return {
 						name = "work",
 						path = "~/Documents/WorkVault",
 					},
-					{
-						name = "test",
-						path = "~/Documents/TestVault",
-					},
 				},
 
 				completion = {
