@@ -1,9 +1,9 @@
 return {
 	{
 		"kostabekre/obsidian.nvim",
-		-- version = "*", -- recommended, use latest release instead of latest commit
+		version = "*", -- recommended, use latest release instead of latest commit
 		lazy = true,
-		branch = "develop",
+		-- branch = "develop",
 		cond = function(_)
 			local allowed_hosts = { "micer", "termipad", "gigaflow" }
 
