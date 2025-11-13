@@ -1,6 +1,6 @@
 return {
 	{
-		"kostabekre/obsidian.nvim",
+		"obsidian-nvim/obsidian.nvim",
 		version = "*", -- recommended, use latest release instead of latest commit
 		lazy = true,
 		-- branch = "develop",
@@ -21,10 +21,10 @@ return {
 			-- refer to `:h file-pattern` for more examples
 			"BufReadPre "
 				.. vim.fn.expand("~")
-				.. "/Documents/PowerVault/*.md",
-			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/PowerVault/*.md",
-			"BufReadPre " .. vim.fn.expand("~") .. "/Documents/WorkVault/*.md",
-			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/WorkVault/*.md",
+				.. "/Documents/power_vault/*.md",
+			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/power_vault/*.md",
+			"BufReadPre " .. vim.fn.expand("~") .. "/Documents/work_vault/*.md",
+			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/work_vault/*.md",
 		},
 		dependencies = {
 			-- Required.
@@ -40,11 +40,11 @@ return {
 				workspaces = {
 					{
 						name = "personal",
-						path = "~/Documents/PowerVault",
+						path = "~/Documents/power_vault",
 					},
 					{
 						name = "work",
-						path = "~/Documents/WorkVault",
+						path = "~/Documents/work_vault",
 					},
 				},
 
@@ -73,8 +73,10 @@ return {
 					},
 				},
 
-				---@return table
-				note_frontmatter_func = function(note)
+        frontmatter = {
+          enabled = true,
+          -- func = require("obsidian.builtin").frontmatter,
+          func = function(note)
 					local out = { aliases = note.aliases, tags = note.tags }
 
 					if note.metadata and not vim.tbl_isempty(note.metadata) then
@@ -101,15 +103,23 @@ return {
 
 					return out
 				end,
+          sort = { "id", "aliases", "tags" },
+        },
 
 				notes_subdir = "Base",
 				new_notes_location = "current_dir",
 
-				-- Optional, sort search results by "path", "modified", "accessed", or "created".
-				-- The recommend value is "modified" and `true` for `sort_reversed`, which means, for example,
-				-- that `:ObsidianQuickSwitch` will show the notes sorted by latest modified time
-				sort_by = "modified",
-				sort_reversed = true,
+
+        ---@class obsidian.config.SearchOpts
+        ---
+        ---@field sort_by string
+        ---@field sort_reversed boolean
+        ---@field max_lines integer
+        search = {
+          sort_by = "modified",
+          sort_reversed = true,
+          max_lines = 1000,
+        },
 
 				daily_notes = {
 					folder = "Daily",
