@@ -1,3 +1,12 @@
+local work_vault_location = "/Documents/work_vault";
+local power_vault_location = "/Documents/power_vault";
+
+if vim.fn.hostname() ~= "micer" then
+  work_vault_location = "/Documents/WorkVault";
+  power_vault_location = "/Documents/PowerVault";
+end
+
+print (vim.fn.expand("~") .. power_vault_location)
 return {
 	{
 		"obsidian-nvim/obsidian.nvim",
@@ -21,10 +30,10 @@ return {
 			-- refer to `:h file-pattern` for more examples
 			"BufReadPre "
 				.. vim.fn.expand("~")
-				.. "/Documents/power_vault/*.md",
-			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/power_vault/*.md",
-			"BufReadPre " .. vim.fn.expand("~") .. "/Documents/work_vault/*.md",
-			"BufNewFile " .. vim.fn.expand("~") .. "/Documents/work_vault/*.md",
+				.. power_vault_location .. "/*.md",
+			"BufNewFile " .. vim.fn.expand("~") .. power_vault_location .. "/*.md",
+			"BufReadPre " .. vim.fn.expand("~") .. work_vault_location .. "/*.md",
+			"BufNewFile " .. vim.fn.expand("~") .. work_vault_location .. "/*.md"
 		},
 		dependencies = {
 			-- Required.
@@ -40,11 +49,11 @@ return {
 				workspaces = {
 					{
 						name = "personal",
-						path = "~/Documents/power_vault",
+						path = "~" .. power_vault_location,
 					},
 					{
 						name = "work",
-						path = "~/Documents/work_vault",
+						path = "~" .. work_vault_location,
 					},
 				},
 
