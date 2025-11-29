@@ -1,12 +1,6 @@
-local work_vault_location = "/Documents/work_vault";
-local power_vault_location = "/Documents/power_vault";
+local work_vault_location = "/Documents/WorkVault"
+local power_vault_location = "/Documents/PowerVault"
 
-if vim.fn.hostname() ~= "micer" then
-  work_vault_location = "/Documents/WorkVault";
-  power_vault_location = "/Documents/PowerVault";
-end
-
-print (vim.fn.expand("~") .. power_vault_location)
 return {
 	{
 		"obsidian-nvim/obsidian.nvim",
@@ -30,10 +24,11 @@ return {
 			-- refer to `:h file-pattern` for more examples
 			"BufReadPre "
 				.. vim.fn.expand("~")
-				.. power_vault_location .. "/*.md",
+				.. power_vault_location
+				.. "/*.md",
 			"BufNewFile " .. vim.fn.expand("~") .. power_vault_location .. "/*.md",
 			"BufReadPre " .. vim.fn.expand("~") .. work_vault_location .. "/*.md",
-			"BufNewFile " .. vim.fn.expand("~") .. work_vault_location .. "/*.md"
+			"BufNewFile " .. vim.fn.expand("~") .. work_vault_location .. "/*.md",
 		},
 		dependencies = {
 			-- Required.
@@ -82,53 +77,52 @@ return {
 					},
 				},
 
-        frontmatter = {
-          enabled = true,
-          -- func = require("obsidian.builtin").frontmatter,
-          func = function(note)
-					local out = { aliases = note.aliases, tags = note.tags }
+				frontmatter = {
+					enabled = true,
+					-- func = require("obsidian.builtin").frontmatter,
+					func = function(note)
+						local out = { aliases = note.aliases, tags = note.tags }
 
-					if note.metadata and not vim.tbl_isempty(note.metadata) then
-						for k, v in pairs(note.metadata) do
-							if k == "updated" then
-								v = tostring(os.date("%Y-%m-%dT%H:%M"))
+						if note.metadata and not vim.tbl_isempty(note.metadata) then
+							for k, v in pairs(note.metadata) do
+								if k == "updated" then
+									v = tostring(os.date("%Y-%m-%dT%H:%M"))
+								end
+
+								out[k] = v
 							end
-
-							out[k] = v
 						end
-					end
 
-					if not out["parent"] then
-						out["parent"] = ""
-					end
+						if not out["parent"] then
+							out["parent"] = ""
+						end
 
-					if not out["created"] then
-						out["created"] = tostring(os.date("%Y-%m-%dT%H:%M"))
-					end
+						if not out["created"] then
+							out["created"] = tostring(os.date("%Y-%m-%dT%H:%M"))
+						end
 
-					if not out["updated"] then
-						out["updated"] = tostring(os.date("%Y-%m-%dT%H:%M"))
-					end
+						if not out["updated"] then
+							out["updated"] = tostring(os.date("%Y-%m-%dT%H:%M"))
+						end
 
-					return out
-				end,
-          sort = { "id", "aliases", "tags" },
-        },
+						return out
+					end,
+					sort = { "id", "aliases", "tags" },
+				},
 
 				notes_subdir = "Base",
 				new_notes_location = "current_dir",
 
-
-        ---@class obsidian.config.SearchOpts
-        ---
-        ---@field sort_by string
-        ---@field sort_reversed boolean
-        ---@field max_lines integer
-        search = {
-          sort_by = "modified",
-          sort_reversed = true,
-          max_lines = 1000,
-        },
+				---@class obsidian.config.SearchOpts
+				---
+				---@field sort_by string
+				---@field sort_reversed boolean
+				---@field max_lines integer
+				search = {
+					sort_by = "modified",
+					sort_reversed = true,
+					max_lines = 1000,
+				},
 
 				daily_notes = {
 					folder = "Daily",

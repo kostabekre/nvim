@@ -3,7 +3,8 @@ return {
 		dir = "~/source/neovim/plugins/obsidian.nvim",
 		name = "obsidian-dev.nvim",
 		cond = function(_)
-			return vim.fn.hostname() == "micer"
+      return false
+			-- return vim.fn.hostname() == "micer"
 		end,
 		dev = true,
 		-- version = "*", -- recommended, use latest release instead of latest commit

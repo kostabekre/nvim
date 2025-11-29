@@ -1,6 +1,6 @@
 {
     "workspace.library": [
-        "~/.local/share/nvim/lazy"
+        "~/.local/share/nvim/lazy",
     ],
     "diagnostics.globals": [
         "vim"
