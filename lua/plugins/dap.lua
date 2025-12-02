@@ -116,6 +116,11 @@ return {
 			dap.listeners.before.event_terminated["dapui_config"] = dapui.close
 			dap.listeners.before.event_exited["dapui_config"] = dapui.close
 
+			local mason_registry = require("mason-registry")
+			if not mason_registry.is_installed("netcoredbg") then
+				return
+			end
+
 			-- .NET specific setup using `easy-dotnet`
 			require("easy-dotnet.netcoredbg").register_dap_variables_viewer() -- special variables viewer specific for .NET
 			local dotnet = require("easy-dotnet")
