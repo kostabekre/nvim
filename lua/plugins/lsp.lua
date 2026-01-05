@@ -23,35 +23,37 @@ return {
             vim.lsp.enable("vtsls")
         end
 
-        vim.lsp.config("ltex_plus", {
-            capabilities = default_capabilities,
-            filetypes = {
-                -- "bib",
-                -- "context",
-                "gitcommit",
-                "html",
-                "markdown",
-                "org",
-                "pandoc",
-                -- "plaintex",
-                -- "quarto",
-                "mail",
-                "mdx",
-                -- "rmd",
-                -- "rnoweb",
-                -- "rst",
-                -- "tex",
-                -- "text",
-                -- "typst",
-                "xhtml",
-            },
-            settings = {
-                ltex = {
-                    language = "en-US",
+        if mason_registry.is_installed("ltex_plus") then
+            vim.lsp.config("ltex_plus", {
+                capabilities = default_capabilities,
+                filetypes = {
+                    -- "bib",
+                    -- "context",
+                    "gitcommit",
+                    "html",
+                    "markdown",
+                    "org",
+                    "pandoc",
+                    -- "plaintex",
+                    -- "quarto",
+                    "mail",
+                    "mdx",
+                    -- "rmd",
+                    -- "rnoweb",
+                    -- "rst",
+                    -- "tex",
+                    -- "text",
+                    -- "typst",
+                    "xhtml",
                 },
-            },
-        })
-        vim.lsp.enable("ltex_plus")
+                settings = {
+                    ltex = {
+                        language = "en-US",
+                    },
+                },
+            })
+            vim.lsp.enable("ltex_plus")
+        end
 
         if mason_registry.is_installed("gdtoolkit") then
             vim.lsp.config("gdscript", {
