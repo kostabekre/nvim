@@ -8,6 +8,7 @@ return {
         "typescriptreact",
         "python",
         "javascript",
+        "json",
     },
     config = function()
         require("conform").setup({
@@ -24,6 +25,7 @@ return {
                 javascript = { "prettierd", "prettier", stop_after_first = true },
                 -- disabled because save becomes slow, it's better to use in precommit instead
                 -- gdscript = { "gdformat" },
+                json = { "jq" },
             },
             formatters = {
                 stylua = {
