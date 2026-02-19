@@ -39,10 +39,9 @@ vim.keymap.set({ "n", "v" }, "<leader>dd", [["_d]])
 
 vim.keymap.set("n", "Q", "<nop>")
 
--- vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
--- vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+-- Go to errors in to current window
+vim.keymap.set("n", "<leader>ek", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>ej", "<cmd>lprev<CR>zz")
 
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 vim.keymap.set({ "n", "i" }, "<D-space>", "<Nop>", { noremap = true, silent = true })
