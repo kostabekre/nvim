@@ -9,6 +9,7 @@ return {
         "python",
         "javascript",
         "json",
+        "yaml",
     },
     config = function()
         require("conform").setup({
@@ -26,6 +27,7 @@ return {
                 -- disabled because save becomes slow, it's better to use in precommit instead
                 -- gdscript = { "gdformat" },
                 json = { "jq" },
+                yaml = { "yamlfmt" },
             },
             formatters = {
                 stylua = {
