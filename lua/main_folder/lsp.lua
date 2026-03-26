@@ -68,7 +68,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
             })
         end, { desc = "Show Documentation about the symbol under the cursor", buffer = true })
 
-        vim.keymap.set("n", "<leader>rs", "<cmd>LspRestart<CR>", { desc = "LSP Restart" })
+        vim.keymap.set("n", "<leader>lr", "<cmd>LspRestart<CR>", { desc = "LSP Restart" })
         vim.keymap.set("n", "<leader>th", function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end, { desc = "Toggle inlay hints" })
