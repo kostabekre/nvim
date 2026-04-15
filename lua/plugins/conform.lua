@@ -1,12 +1,10 @@
--- Formats a file with given formatters or with LSP if there is no formatter available.
-
 local get_long_running_formatters = function(bufnr)
     local conform = require("conform")
 
     local formatters = conform.list_formatters(bufnr)
 
     local has_long_running_formatters = vim.iter(formatters):any(function(f)
-        return f.command == "csharpier"
+        return f.command == "csharpier" or f.command == "gdformat"
     end)
 
     return has_long_running_formatters
@@ -27,15 +25,13 @@ return {
         require("conform").setup({
             formatters_by_ft = {
                 lua = { "stylua" },
+                cs = { "csharpier" },
                 typescriptreact = { "prettierd", "prettier", stop_after_first = true },
                 -- Conform will run multiple formatters sequentially
                 python = { "isort", "black" },
-                -- You can customize some of the format options for the filetype (:help conform.format)
-                -- rust = { "rustfmt", lsp_format = "fallback" },
-                -- Conform will run the first available formatter
                 javascript = { "prettierd", "prettier", stop_after_first = true },
                 -- disabled because save becomes slow, it's better to use in precommit instead
-                -- gdscript = { "gdformat" },
+                gdscript = { "gdformat" },
                 json = { "jq" },
                 yaml = { "yamlfmt" },
                 ["*"] = { "codespell" },
@@ -67,17 +63,23 @@ return {
                 stylua = {
                     cwd = require("conform.util").root_file({ ".stylua.toml" }),
                 },
-                csharpier = {
-                    command = "csharpier",
-                    args = { "format", "$FILENAME", "--write-stdout" },
-                },
                 cwd = require("conform.util").root_file({ ".gitignore" }),
             },
         })
         local cs_interpise_projects = string.find(vim.uv.cwd(), "panelapps")
 
+        local conform = require("conform")
+
         if cs_interpise_projects == nil then
-            require("conform").formatters_by_ft.cs = { "csharpier" }
+            conform.formatters.csharpier = {
+                command = "csharpier",
+                args = { "format", "$FILENAME", "--write-stdout" },
+            }
+        else
+            conform.formatters.csharpier = {
+                command = "dotnet-csharpier-config",
+                args = "--write-stdout",
+            }
         end
     end,
 }
