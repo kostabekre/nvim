@@ -28,13 +28,11 @@ return {
                         return
                     end
 
-                    local buffers = vim.lsp.get_buffers_by_client_id(clients[1].id)
                     local client = clients[1]
+                    local buffers = vim.lsp.get_client_by_id(client.id)
                     for _, buf in ipairs(buffers) do
-                        client:request(vim.lsp.protocol.Methods.textDocument_diagnostic, {
-                            textDocument = vim.lsp.util.make_text_document_params(buf),
-                        }, nil, buf)
-                        -- vim.lsp.buf.vim.lsp.codelens.refresh() -- throws error
+                        local params = { textDocument = vim.lsp.util.make_text_document_params(buf) }
+                        client:request("textDocument/diagnostic", params, nil, buf)
                     end
                 end,
             })
