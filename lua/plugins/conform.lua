@@ -27,7 +27,6 @@ return {
         require("conform").setup({
             formatters_by_ft = {
                 lua = { "stylua" },
-                cs = { "csharpier" }, -- doesn't work, so it's fallbacked to LSP (roslyn)
                 typescriptreact = { "prettierd", "prettier", stop_after_first = true },
                 -- Conform will run multiple formatters sequentially
                 python = { "isort", "black" },
@@ -75,5 +74,10 @@ return {
                 cwd = require("conform.util").root_file({ ".gitignore" }),
             },
         })
+        local cs_interpise_projects = string.find(vim.uv.cwd(), "panelapps")
+
+        if cs_interpise_projects == nil then
+            require("conform").formatters_by_ft.cs = { "csharpier" }
+        end
     end,
 }
