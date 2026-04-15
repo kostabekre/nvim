@@ -1,5 +1,17 @@
 -- Formats a file with given formatters or with LSP if there is no formatter available.
 
+local get_long_running_formatters = function(bufnr)
+    local conform = require("conform")
+
+    local formatters = conform.list_formatters(bufnr)
+
+    local has_long_running_formatters = vim.iter(formatters):any(function(f)
+        return f.command == "csharpier"
+    end)
+
+    return has_long_running_formatters
+end
+
 return {
     "stevearc/conform.nvim",
     ft = {
@@ -33,15 +45,7 @@ return {
                 lsp_format = "fallback",
             },
             format_on_save = function(bufnr)
-                local conform = require("conform")
-
-                local formatters = conform.list_formatters(bufnr)
-
-                local has_long_running_formatters = vim.iter(formatters):any(function(f)
-                    return f.command == "csharpier"
-                end)
-
-                return not has_long_running_formatters
+                return not get_long_running_formatters(bufnr)
                         and {
                             lsp_format = "fallback",
                             timeout_ms = 500,
@@ -49,17 +53,11 @@ return {
                     or nil
             end,
             format_after_save = function(bufnr)
-                local conform = require("conform")
-
-                local formatters = conform.list_formatters(bufnr)
-
-                local has_long_running_formatters = vim.iter(formatters):any(function(f)
-                    return f.command == "csharpier"
-                end)
-
-                return has_long_running_formatters and {
-                    lsp_format = "fallback",
-                } or nil
+                return get_long_running_formatters(bufnr)
+                        and {
+                            lsp_format = "fallback",
+                        }
+                    or nil
             end,
             log_level = vim.log.levels.ERROR,
             -- Conform will notify you when a formatter errors
