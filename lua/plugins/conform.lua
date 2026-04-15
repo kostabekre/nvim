@@ -13,10 +13,9 @@ return {
     },
     config = function()
         require("conform").setup({
-            -- PAY ATTENTION at the ft above, if you use new language
             formatters_by_ft = {
                 lua = { "stylua" },
-                --cs = { "csharpier" }, -- doesn't work, so it's fallbacked to LSP (roslyn)
+                cs = { "csharpier" }, -- doesn't work, so it's fallbacked to LSP (roslyn)
                 typescriptreact = { "prettierd", "prettier", stop_after_first = true },
                 -- Conform will run multiple formatters sequentially
                 python = { "isort", "black" },
@@ -28,7 +27,45 @@ return {
                 -- gdscript = { "gdformat" },
                 json = { "jq" },
                 yaml = { "yamlfmt" },
+                ["*"] = { "codespell" },
             },
+            default_format_opts = {
+                lsp_format = "fallback",
+            },
+            format_on_save = function(bufnr)
+                local conform = require("conform")
+
+                local formatters = conform.list_formatters(bufnr)
+
+                local has_long_running_formatters = vim.iter(formatters):any(function(f)
+                    return f.command == "csharpier"
+                end)
+
+                return not has_long_running_formatters
+                        and {
+                            lsp_format = "fallback",
+                            timeout_ms = 500,
+                        }
+                    or nil
+            end,
+            format_after_save = function(bufnr)
+                local conform = require("conform")
+
+                local formatters = conform.list_formatters(bufnr)
+
+                local has_long_running_formatters = vim.iter(formatters):any(function(f)
+                    return f.command == "csharpier"
+                end)
+
+                return has_long_running_formatters and {
+                    lsp_format = "fallback",
+                } or nil
+            end,
+            log_level = vim.log.levels.ERROR,
+            -- Conform will notify you when a formatter errors
+            notify_on_error = true,
+            -- Conform will notify you when no formatters are available for the buffer
+            notify_no_formatters = true,
             formatters = {
                 stylua = {
                     cwd = require("conform.util").root_file({ ".stylua.toml" }),
@@ -39,12 +76,6 @@ return {
                 },
                 cwd = require("conform.util").root_file({ ".gitignore" }),
             },
-            format_on_save = {
-                -- These options will be passed to conform.format()
-                timeout_ms = 500,
-                lsp_format = "fallback",
-            },
-            log_level = vim.log.levels.ERROR,
         })
     end,
 }
