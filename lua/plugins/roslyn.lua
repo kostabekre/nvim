@@ -30,6 +30,9 @@ return {
 
                     local client = clients[1]
                     local buffers = vim.lsp.get_client_by_id(client.id)
+
+                    vim.lsp.codelens.enable(true)
+
                     for _, buf in ipairs(buffers) do
                         local params = { textDocument = vim.lsp.util.make_text_document_params(buf) }
                         client:request("textDocument/diagnostic", params, nil, buf)
