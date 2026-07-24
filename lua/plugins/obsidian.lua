@@ -22,10 +22,7 @@ return {
             -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
             -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
             -- refer to `:h file-pattern` for more examples
-            "BufReadPre "
-                .. vim.fn.expand("~")
-                .. power_vault_location
-                .. "/*.md",
+            "BufReadPre " .. vim.fn.expand("~") .. power_vault_location .. "/*.md",
             "BufNewFile " .. vim.fn.expand("~") .. power_vault_location .. "/*.md",
             "BufReadPre " .. vim.fn.expand("~") .. work_vault_location .. "/*.md",
             "BufNewFile " .. vim.fn.expand("~") .. work_vault_location .. "/*.md",
@@ -53,8 +50,6 @@ return {
                 },
 
                 completion = {
-                    nvim_cmp = true,
-                    blink = false,
                     create_new = false,
                 },
 
@@ -110,8 +105,8 @@ return {
                     sort = { "id", "aliases", "tags" },
                 },
 
-                notes_subdir = "Base",
-                new_notes_location = "current_dir",
+                notes_subdir = "+",
+                new_notes_location = "notes_subdir",
 
                 ---@class obsidian.config.SearchOpts
                 ---
@@ -125,11 +120,11 @@ return {
                 },
 
                 daily_notes = {
-                    folder = "Daily",
+                    folder = "Calendar/Daily",
                 },
 
                 templates = {
-                    folder = "Templates",
+                    folder = "x/Templates",
                     date_format = "%Y-%m-%dT%H:%M",
                     substitutions = {
                         custom_title = function()
@@ -230,7 +225,7 @@ return {
 
             vim.keymap.set("n", "<leader>odt", function()
                 vim.api.nvim_cmd({ cmd = "Obsidian", args = { "today", "+1" } }, {})
-            end, { desc = "Open Tommorow Note" })
+            end, { desc = "Open Tomorrow Note" })
 
             vim.keymap.set("n", "<leader>ots", "<CMD>Obsidian tags<CR>", { desc = "Show Tags" })
 
