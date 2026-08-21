@@ -20,10 +20,16 @@ return {
         "javascript",
         "json",
         "yaml",
+        "bash",
+        "sh",
+        "zsh",
     },
     config = function()
         require("conform").setup({
             formatters_by_ft = {
+                bash = { "beautysh" },
+                zsh = { "beautysh" },
+                sh = { "beautysh" },
                 lua = { "stylua" },
                 cs = { "csharpier" },
                 typescriptreact = { "prettierd", "prettier", stop_after_first = true },
