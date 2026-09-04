@@ -9,7 +9,8 @@ return {
     },
     dependencies = {
         {
-            "mason-org/mason.nvim",
+            "williamboman/mason.nvim",
+            config = true,
             opts = {
                 registries = {
                     "github:mason-org/mason-registry",

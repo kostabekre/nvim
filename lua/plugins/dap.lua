@@ -4,9 +4,18 @@ return {
         dependencies = {
             "rcarriga/nvim-dap-ui",
             "nvim-neotest/nvim-nio",
-
-            "williamboman/mason.nvim",
-            "jay-babu/mason-nvim-dap.nvim",
+            {
+                "jay-babu/mason-nvim-dap.nvim",
+                config = true,
+                opts = {
+                    ensure_installed = {
+                        "netcoredbg",
+                    },
+                },
+                dependencies = {
+                    "williamboman/mason.nvim",
+                },
+            },
         },
         keys = {
             "<F5>",
