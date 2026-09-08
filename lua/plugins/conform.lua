@@ -23,6 +23,7 @@ return {
         "bash",
         "sh",
         "zsh",
+        "http",
     },
     config = function()
         require("conform").setup({
@@ -32,6 +33,7 @@ return {
                 sh = { "beautysh" },
                 lua = { "stylua" },
                 cs = { "csharpier" },
+                http = { "kulala-fmt" },
                 typescriptreact = { "prettierd", "prettier", stop_after_first = true },
                 -- Conform will run multiple formatters sequentially
                 python = { "isort", "black" },
