@@ -1,9 +1,15 @@
 -- lua/hover_fix.lua
 --
 -- Sanitize LSP hover text before it is rendered.
--- C# servers (Roslyn / OmniSharp / csharp-ls) send CRLF line endings and
--- HTML entities such as `&nbsp;` inside markdown, which show up as `^M` at
--- the end of every line and as literal `&nbsp;` in the hover float.
+--
+-- Two families of server junk are fixed here:
+--   * C# servers (Roslyn / OmniSharp / csharp-ls) send CRLF line endings and
+--     HTML entities like `&nbsp;` inside markdown -> `^M` at the end of every
+--     line and literal `&nbsp;` in the float.
+--   * Roslyn converts XML doc comments to markdown and backslash-escapes prose
+--     punctuation (`.`, `_`, `-`, `(`, `)`, ...) the way CommonMark requires.
+--     Neovim never resolves those escapes, so `DbContext\.SaveChanges\(\)`
+--     shows up verbatim -> escapes are resolved here, in prose only.
 --
 -- Neovim >= 0.11. No deprecated API:
 --   * vim.lsp.handlers / vim.lsp.with  -> gone (0.11); they no longer affect
@@ -27,35 +33,130 @@ local ENTITIES = {
     { "&amp;", "&" },
 }
 
+-- ASCII punctuation that a backslash may escape in CommonMark.
+local ESCAPABLE = {}
+for ch in ("!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"):gmatch(".") do
+    ESCAPABLE[ch] = true
+end
+
+--- Resolve backslash escapes on one line of markdown prose.
+--- Inline code spans (`like this`) are literal, so their backslashes are kept;
+--- a code span never spans a newline, so this state resets for every line.
+---@param line string
+---@return string
+local function unescape_line(line)
+    if not line:find("\\", 1, true) then
+        return line
+    end
+    local out, i, code = {}, 1, 0
+    local n = #line
+    while i <= n do
+        local ch = line:sub(i, i)
+        if ch == "\\" and code == 0 then
+            local escaped = line:sub(i + 1, i + 1)
+            if ESCAPABLE[escaped] then
+                out[#out + 1] = escaped -- drop the backslash, keep the character
+                i = i + 2
+            else
+                out[#out + 1] = ch -- not an escape (C:\Users\x.exe) -> keep both
+                i = i + 1
+            end
+        elseif ch == "`" then
+            local run = line:sub(i):match("^`+")
+            local len = #run
+            if code == 0 then
+                code = len
+            elseif code == len then
+                code = 0
+            end
+            out[#out + 1] = run
+            i = i + len
+        else
+            out[#out + 1] = ch
+            i = i + 1
+        end
+    end
+    return table.concat(out)
+end
+
+--- Resolve CommonMark backslash escapes in markdown prose, leaving fenced code
+--- blocks (```csharp ... ```) verbatim, so a regex or Windows path inside a
+--- code block keeps every backslash it has.
+---@param text string
+---@return string
+local function unescape_markdown(text)
+    local out, fence = {}, nil
+    for line in (text .. "\n"):gmatch("([^\n]*)\n") do
+        if fence then
+            out[#out + 1] = line
+            local trimmed = line:match("^%s*(.-)%s*$")
+            if #trimmed >= #fence and not trimmed:find("[^" .. fence:sub(1, 1) .. "]") then
+                fence = nil -- closing fence of the same character
+            end
+        else
+            local opener = line:match("^%s*(`+)") or line:match("^%s*(~+)")
+            if opener and #opener >= 3 then
+                fence = opener
+                out[#out + 1] = line
+            else
+                out[#out + 1] = unescape_line(line)
+            end
+        end
+    end
+    return table.concat(out, "\n")
+end
+
 --- Fix one string of server-provided markup.
 ---@param text string?
+---@param mode "markdown"|"plaintext"|"code"? how it will be rendered:
+---            markdown  = prose: entities and backslash escapes are decoded
+---            plaintext = entities decoded, backslashes stay literal
+---            code      = verbatim apart from line endings
 ---@return string?
-function M.clean(text)
+function M.clean(text, mode)
     if type(text) ~= "string" or text == "" then
         return text
     end
     text = text:gsub("\r\n", "\n"):gsub("\r", "\n")
-    for _, entity in ipairs(ENTITIES) do
-        text = text:gsub(entity[1], entity[2])
+    if mode ~= "code" then
+        for _, entity in ipairs(ENTITIES) do
+            text = text:gsub(entity[1], entity[2])
+        end
+    end
+    if mode == nil or mode == "markdown" then
+        text = unescape_markdown(text)
     end
     return text
 end
 
---- Recursively clean every string in an `lsp.Hover.contents` value.
---- Handles all five shapes the spec allows: MarkupContent, MarkedString,
---- MarkedString-pair, and arrays of either.
-local function clean_deep(value)
-    if type(value) == "string" then
-        return M.clean(value)
+--- Clean an `lsp.Hover.contents` value, whatever shape it has: MarkupContent,
+--- MarkedString, MarkedString-pair, or arrays of either. MarkedString pairs
+--- (`{ language = "csharp", value = <code> }`) are code, so only their line
+--- endings are normalized.
+---@param contents table|string
+---@return table|string
+local function sanitize_contents(contents)
+    if type(contents) == "string" then
+        return M.clean(contents, "markdown")
     end
-    if type(value) ~= "table" then
-        return value
+    if type(contents) ~= "table" then
+        return contents
     end
-    local out = {}
-    for k, v in pairs(value) do
-        out[k] = clean_deep(v)
+    local mode
+    if contents.kind == "plaintext" then
+        mode = "plaintext"
+    elseif contents.kind then
+        mode = "markdown"
+    elseif contents.language then
+        mode = "code" -- MarkedString pair: the value is already a code block
+    else
+        local out = {}
+        for i, item in ipairs(contents) do
+            out[i] = sanitize_contents(item)
+        end
+        return out
     end
-    return out
+    return vim.tbl_extend("force", {}, contents, { value = M.clean(contents.value, mode) })
 end
 
 local ns = vim.api.nvim_create_namespace("hover_fix.reference")
@@ -120,7 +221,7 @@ function M.hover(config)
                 vim.notify(("hover failed: %s (%d)"):format(resp.err.message, resp.err.code), vim.log.levels.ERROR)
             elseif resp.result and resp.result.contents then
                 -- >>> the whole point: clean the text *before* it becomes buffer lines
-                local contents = clean_deep(resp.result.contents)
+                local contents = sanitize_contents(resp.result.contents)
                 local plain = type(contents) == "table" and contents.kind == "plaintext"
                 local lines = plain and vim.split(contents.value or "", "\n", { trimempty = true })
                     or vim.lsp.util.convert_input_to_markdown_lines(contents)
