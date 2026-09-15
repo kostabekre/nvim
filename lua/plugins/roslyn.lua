@@ -18,6 +18,22 @@ return {
         config = function()
             require("roslyn").setup(opts)
 
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(args)
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    if not client then
+                        return
+                    end
+
+                    -- Intercept hover data specifically for C# language servers (OmniSharp or Roslyn)
+                    if client.name == "omnisharp" or client.name == "roslyn" then
+                        vim.keymap.set("n", "K", function()
+                            require("hover_fix").hover()
+                        end, { buffer = args.buf, desc = "hover (sanitized)" })
+                    end
+                end,
+            })
+
             -- Temp solution because roslyn is not always updated automatically
             -- taken from https://github.com/seblyng/roslyn.nvim/wiki#diagnostic-refresh
             vim.api.nvim_create_autocmd({ "BufWritePost" }, {
