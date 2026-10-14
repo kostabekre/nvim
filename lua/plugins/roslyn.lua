@@ -59,6 +59,7 @@ return {
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             -- local capabilities = require("blink.cmp").get_lsp_capabilities()
 
+            local root_dir = vim.lsp.config["roslyn"].root_dir
             vim.lsp.config("roslyn", {
                 on_attach = function()
                     vim.lsp.inlay_hint.enable()
@@ -83,6 +84,14 @@ return {
                         dotnet_show_completion_items_from_unimported_namespaces = true,
                     },
                 },
+                root_dir = function(bufnr, on_dir)
+                    local buf_name = vim.api.nvim_buf_get_name(bufnr)
+                    if buf_name:match("^%w+://") then
+                        return
+                    end
+
+                    root_dir(bufnr, on_dir)
+                end,
             })
         end,
     },
