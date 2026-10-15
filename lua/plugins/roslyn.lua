@@ -56,13 +56,33 @@ return {
                 end,
             })
 
+            vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {
+                pattern = "*__virtual.html",
+                callback = function(args)
+                    vim.opt_local.swapfile = false
+                    vim.opt_local.bufhidden = "hide"
+                    vim.opt_local.buftype = "nofile"
+                    vim.opt_local.undofile = false
+                    vim.opt_local.matchpairs = ""
+                end,
+            })
+
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             -- local capabilities = require("blink.cmp").get_lsp_capabilities()
 
             local root_dir = vim.lsp.config["roslyn"].root_dir
             vim.lsp.config("roslyn", {
-                on_attach = function()
-                    vim.lsp.inlay_hint.enable()
+                on_attach = function(client, bufnr)
+                    local filetype = vim.bo[bufnr].filetype
+                    local buf_name = vim.api.nvim_buf_get_name(bufnr)
+
+                    -- Check if it's a razor file, cshtml file, or virtual roslyn buffer
+                    if filetype == "razor" or filetype == "cshtml" or buf_name:match("__virtual%.html$") then
+                        -- Explicitly force hints off for Razor buffers to prevent UI lag
+                        vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+                    else
+                        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+                    end
                 end,
                 capabilities = capabilities,
                 settings = {
@@ -84,6 +104,7 @@ return {
                         dotnet_show_completion_items_from_unimported_namespaces = true,
                     },
                 },
+                -- disable duplicate client spawn
                 root_dir = function(bufnr, on_dir)
                     local buf_name = vim.api.nvim_buf_get_name(bufnr)
                     if buf_name:match("^%w+://") then
